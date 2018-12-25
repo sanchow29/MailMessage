@@ -11,20 +11,15 @@
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
 
     <style type="text/css">
-
-        #div_loginContainer
-        {
-
-            border:2px solid grey;
-            border-radius:5px;
-            max-width:500px;
-            position:absolute;
-            top:50%;
-            left:50%;
-            transform:translate(-50%,-50%);
-
+        #div_loginContainer {
+            border: 2px solid grey;
+            border-radius: 5px;
+            max-width: 500px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
         }
-
     </style>
 
 </head>
@@ -56,9 +51,9 @@
 
                         <div class="row">
 
-                            <div class="col-md-12" style="text-align:center;">
+                            <div class="col-md-12" style="text-align: center;">
 
-                                <h1 style="background-color:#101010;color:#9d9d9d;padding:10px;border:2px solid #101010;border-radius:5px;">Please Login</h1>
+                                <h1 style="background-color: #101010; color: #9d9d9d; padding: 10px; border: 2px solid #101010; border-radius: 5px;">Please Login</h1>
                                 <hr />
 
                             </div>
@@ -67,12 +62,12 @@
 
                         <div class="row">
 
-                            <div class="col-md-12" style="text-align:center;">
+                            <div class="col-md-12" style="text-align: center;">
 
                                 <asp:TextBox ID="UserName" runat="server" CssClass="form-control input-lg"
-                                        placeholder="test@test.com"></asp:TextBox>
-                                <asp:RequiredFieldValidator ID="UserNameRequired" runat="server" 
-                                            ControlToValidate="UserName" ErrorMessage="User Name is required." ToolTip="User Name is required." ValidationGroup="Login1">*</asp:RequiredFieldValidator>
+                                    placeholder="test@test.com"></asp:TextBox>
+                                <asp:RequiredFieldValidator ID="UserNameRequired" runat="server"
+                                    ControlToValidate="UserName" ErrorMessage="User Name is required." ToolTip="User Name is required." ValidationGroup="Login1">*</asp:RequiredFieldValidator>
 
                             </div>
 
@@ -80,22 +75,22 @@
 
                         <div class="row">
 
-                            <div class="col-md-12" style="text-align:center;">
+                            <div class="col-md-12" style="text-align: center;">
 
                                 <asp:TextBox ID="Password" runat="server" TextMode="Password" CssClass="form-control input-lg"
-                                        placeholder="Password"></asp:TextBox>
-                                <asp:RequiredFieldValidator ID="PasswordRequired" runat="server" ControlToValidate="Password" 
+                                    placeholder="Password"></asp:TextBox>
+                                <asp:RequiredFieldValidator ID="PasswordRequired" runat="server" ControlToValidate="Password"
                                     ErrorMessage="Password is required." ToolTip="Password is required." ValidationGroup="Login1">*</asp:RequiredFieldValidator>
 
                             </div>
 
                         </div>
 
-                        <div class="row" style="margin-bottom:10px;">
+                        <div class="row" style="margin-bottom: 10px;">
 
                             <div class="col-md-12">
 
-                                <asp:Button ID="LoginButton" runat="server" CommandName="Login" 
+                                <asp:Button ID="LoginButton" runat="server" CommandName="Login"
                                     Text="Log In" ValidationGroup="Login1" CssClass="btn btn-primary form-control" />
 
                             </div>
@@ -109,14 +104,13 @@
                             </div>
 
                         </div>--%>
-
                     </div>
 
                 </LayoutTemplate>
 
             </asp:Login>
 
-            <div style="position:fixed;bottom:0;left:50%;transform:translate(-50%,-50%);">
+            <div style="position: fixed; bottom: 0; left: 50%; transform: translate(-50%,-50%);">
 
                 <p>&copy; 2018 - Mail Marketing Campaign</p>
 

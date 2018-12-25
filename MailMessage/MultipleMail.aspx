@@ -2,19 +2,15 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
-   
+
     <style type="text/css">
-
-        #div_MultiEmailGrid table
-        {
-            border:0;
-        }
-
-        #div_MultiEmailGrid table td 
-        {
+        #div_MultiEmailGrid table {
             border: 0;
         }
 
+            #div_MultiEmailGrid table td {
+                border: 0;
+            }
     </style>
 
     <script type="text/javascript">
@@ -83,13 +79,13 @@
 
                                     <asp:FileUpload ID="Multipleemailupd" runat="server" AllowMultiple="false" EnableViewState="true" />
                                     <asp:Button runat="server" ToolTip="Download Sample Upload Format" ID="btn_bulkSampleExcel" Text="Check Sample Excel Format"
-                                        CssClass="btn btn-link" EnableViewState="true" ViewStateMode="Enabled" Style="text-decoration: underline;position:relative;right:11px;" OnClick="btn_bulkSampleExcel_Click" />
+                                        CssClass="btn btn-link" EnableViewState="true" ViewStateMode="Enabled" Style="text-decoration: underline; position: relative; right: 11px;" OnClick="btn_bulkSampleExcel_Click" />
 
                                 </div>
 
                                 <div class="col-md-3">
 
-                                    <asp:Button ID="btn_upload" runat="server" CssClass="btn btn-primary" Text="Upload" OnClick="btn_upload_Click" style="padding:14px;" />
+                                    <asp:Button ID="btn_upload" runat="server" CssClass="btn btn-primary" Text="Upload" OnClick="btn_upload_Click" Style="padding: 14px;" />
 
                                 </div>
 
@@ -122,7 +118,7 @@
 
                                         <label for="txtmulsub" class="label label-default form-control">Subject</label>
 
-                                        <asp:TextBox ID="txtmulsub" runat="server" CssClass="form-control input-sm" style="max-width:1000px;"></asp:TextBox>
+                                        <asp:TextBox ID="txtmulsub" runat="server" CssClass="form-control input-sm" Style="max-width: 1000px;"></asp:TextBox>
 
                                     </div>
 
@@ -138,7 +134,7 @@
                                         <label for="txtmultiplemessg" class="label label-default form-control">Body</label>
 
                                         <asp:TextBox ID="txtmultiplemessg" runat="server" TextMode="MultiLine"
-                                            CssClass="form-control input-lg" style="height:11em;max-width:1000px;"></asp:TextBox>
+                                            CssClass="form-control input-lg" Style="height: 11em; max-width: 1000px;"></asp:TextBox>
 
                                     </div>
                                 </div>
@@ -180,15 +176,15 @@
 
                         </div>
 
-                        <div class="col-md-3" id="Displaygrid_Div" style="display:none;" runat="server">
-                            
+                        <div class="col-md-3" id="Displaygrid_Div" style="display: none;" runat="server">
+
                             <label>Uploaded Email IDs :</label>
 
-                            <div id="div_MultiEmailGrid" style="border:2px solid grey;padding:5px;border-radius:5px;max-height:450px;overflow-y:scroll;overflow-x:scroll;">
+                            <div id="div_MultiEmailGrid" style="border: 2px solid grey; padding: 5px; border-radius: 5px; max-height: 450px; overflow-y: scroll; overflow-x: scroll;">
 
-                                <asp:GridView runat="server" AutoGenerateColumns="false" 
+                                <asp:GridView runat="server" AutoGenerateColumns="false"
                                     ViewStateMode="Enabled" EnableViewState="true" ID="grdview_MultiEmail"
-                                     CssClass="table table-bordered table-condensed table-hover table-responsive">
+                                    CssClass="table table-bordered table-condensed table-hover table-responsive">
 
                                     <Columns>
 

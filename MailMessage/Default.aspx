@@ -3,9 +3,8 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="jumbotron">
-             
         Mail Dashboard
-          <div style ="margin-top:10px;">
+          <div style="margin-top: 10px;">
               <asp:GridView ID="GridView1" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None">
                   <AlternatingRowStyle BackColor="White" />
                   <EditRowStyle BackColor="#2461BF" />
@@ -21,6 +20,6 @@
               </asp:GridView>
           </div>
     </div>
-    
+
 
 </asp:Content>

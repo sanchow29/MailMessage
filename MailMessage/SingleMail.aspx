@@ -1,8 +1,8 @@
 ﻿<%@ Page Title="Single Mail" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SingleMail.aspx.cs" Inherits="MailMessage.About" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
-    
-   
+
+
     <script type="text/javascript">
 
         $(document).ready(function () {
@@ -43,8 +43,8 @@
         <ContentTemplate>
 
             <div class="container-fluid">
-                
-                <div id="Singlemail_div" runat="server" style="display: block;margin-top:10px;border:2px solid grey;border-radius:5px;padding:5px;">
+
+                <div id="Singlemail_div" runat="server" style="display: block; margin-top: 10px; border: 2px solid grey; border-radius: 5px; padding: 5px;">
 
                     <div class="row">
 
@@ -54,7 +54,7 @@
 
                                 <label for="txtsinsletoemail" class="form-control label label-default">Email To</label>
                                 <asp:TextBox ID="txtsinsletoemail" placeholder="Add recipients for eg. john@gmail.com , merry@gmail.com" runat="server"
-                                        CssClass="form-control input-sm" style="max-width:1000px;"></asp:TextBox>
+                                    CssClass="form-control input-sm" Style="max-width: 1000px;"></asp:TextBox>
 
                             </div>
 
@@ -69,8 +69,8 @@
                             <div class="col-md-12">
 
                                 <label for="txtsinglesub" class="label label-default form-control">Subject</label>
-                                <asp:TextBox ID="txtsinglesub" runat="server" ViewStateMode="Enabled" 
-                                    EnableViewState="true" CssClass="form-control input-sm" style="max-width:1000px;"></asp:TextBox>
+                                <asp:TextBox ID="txtsinglesub" runat="server" ViewStateMode="Enabled"
+                                    EnableViewState="true" CssClass="form-control input-sm" Style="max-width: 1000px;"></asp:TextBox>
 
                             </div>
 
@@ -86,8 +86,8 @@
 
                                 <label for="txtsinglemessg" class="form-control label label-default">Message</label>
                                 <asp:TextBox ID="txtsinglemessg" runat="server" TextMode="MultiLine" Height="12em"
-                                        ViewStateMode="Enabled" EnableViewState="true" CssClass="form-control input-lg"
-                                        style="max-width:1000px;"></asp:TextBox>
+                                    ViewStateMode="Enabled" EnableViewState="true" CssClass="form-control input-lg"
+                                    Style="max-width: 1000px;"></asp:TextBox>
 
                             </div>
 
@@ -112,10 +112,9 @@
 
                     </div>
 
-                    <div class="row" style="margin-top: 10px;display:none;">
+                    <div class="row" style="margin-top: 10px; display: none;">
 
                         <div class="col-md-2">
-                                
                         </div>
 
                     </div>
@@ -128,7 +127,7 @@
 
                     </div>
 
-                    <div class="row" style="margin-top: 10px;margin-bottom:5px;">
+                    <div class="row" style="margin-top: 10px; margin-bottom: 5px;">
 
                         <div class="col-md-12">
 
@@ -158,9 +157,8 @@
             <%--<asp:AsyncPostBackTrigger ControlID="radioButton_SinglePage" EventName="CheckedChanged" />
                     <asp:AsyncPostBackTrigger ControlID="radioButton_Multipage" EventName="CheckedChanged" />--%>
             <%--<asp:PostBackTrigger ControlID="btn_upload" />--%>
-
         </Triggers>
 
     </asp:UpdatePanel>
-    
+
 </asp:Content>
