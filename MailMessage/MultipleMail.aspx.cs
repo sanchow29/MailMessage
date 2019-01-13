@@ -1,23 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Net;
 using System.Net.Mail;
-using Excel = Microsoft.Office.Interop.Excel;
-using System.Text;
-using System.Collections;
 using System.Data;
 using MySql.Data.MySqlClient;
 using System.Data.OleDb;
-using System.IO;
 
 namespace MailMessage
 {
     public partial class Contact : Page
     {
+        private string MyConnection2 = " server = 50.62.209.108;port=3306; user id = sarasa; database = hans;password=@dmin@2018";
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -38,78 +33,85 @@ namespace MailMessage
         {
             string message = txtmultiplemessg.Text.ToString();
             string subject = txtmulsub.Text.ToString();
-            if (!string.IsNullOrEmpty(message) && !string.IsNullOrEmpty(subject))
+            int limit = Mailcount(Session["Email"].ToString());
+            int count = Convert.ToInt32(Session["EmailLimit"].ToString());
+            if (limit <= count)
             {
-                try
+                if (!string.IsNullOrEmpty(message) && !string.IsNullOrEmpty(subject))
                 {
-                   // System.Net.Mail.MailMessage mailMessage1 = new System.Net.Mail.MailMessage();
-                    //mailMessage1.From = new MailAddress("info@hanusol.com");
-                   
-                   // mailMessage1.IsBodyHtml = true;
-                    foreach (GridViewRow g in grdview_MultiEmail.Rows)
+                    try
                     {
-                        if (g.RowType == DataControlRowType.DataRow)
-                        {
-                           // mailMessage1.Bcc.Add(new MailAddress(g.Cells[0].Text.ToString()));
-                            // mailMessage1.To.Add(new MailAddress(g.Cells[0].Text.ToString()));
-                            var smtp = new SmtpClient
-                            {
-                                Host = "relay-hosting.secureserver.net",
-                                Port = 25,
-                                EnableSsl = false,
-                                DeliveryMethod = SmtpDeliveryMethod.Network,
-                                UseDefaultCredentials = false,
-                                Credentials = new NetworkCredential("info@hanusol.com", "hanusol@2018")
-                            };
-                            var receiverEmail = g.Cells[0].Text.ToString();
-                            using (var mess = new System.Net.Mail.MailMessage("info@hanusol.com", receiverEmail)
-                            {
-                                Subject = subject,
-                                Body = message
-                            })
-                                //SmtpClient smtp = new SmtpClient();
-                                //smtp.Host = "relay-hosting.secureserver.net";
-                                //smtp.Port = 25;
-                                //smtp.EnableSsl = false;
-                                //smtp.UseDefaultCredentials = false;
-                                //NetworkCredential NetworkCred = new NetworkCredential();
-                                //NetworkCred.UserName = mailMessage1.From.Address;
-                                //NetworkCred.Password = "hanusol@2018";
-                                // smtp.Credentials = NetworkCred;
-                               // mailMessage1.Subject = subject;
-                            //mailMessage1.Body = message;
-                            smtp.Send(mess);
-                        }
-                    }
-                    
-                    grdview_MultiEmail.DataSource = null;
-                    grdview_MultiEmail.DataBind();
-                    txtmultiplemessg.Text = null;
-                    txtmulsub.Text = null;
-                    Displaygrid_Div.Style["display"] = "none";
-                    string MyConnection2 = " server = 50.62.209.108;port=3306; user id = sarasa; database = hans;password=@dmin@2018";
-                    string Query = "insert into hans.dashboard_details(Name,DateTime,count,Type) values('" + Session["FName"].ToString() + "','" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "','" + Session["Rowount"].ToString() + "','" + Session["MailType"].ToString() + "');";
+                        // System.Net.Mail.MailMessage mailMessage1 = new System.Net.Mail.MailMessage();
+                        //mailMessage1.From = new MailAddress("info@hanusol.com");
 
-                    MySqlConnection MyConn2 = new MySqlConnection(MyConnection2);
-                    MySqlCommand MyCommand2 = new MySqlCommand(Query, MyConn2);
-                    MySqlDataReader MyReader2;
-                    MyConn2.Open();
-                    MyReader2 = MyCommand2.ExecuteReader();
-                    MyConn2.Close();
-                    Session["Rowount"] = null;
-                    Session["MailType"] = null;
-                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Saved", "alert('Email sent successfully.')", true);
-                    
+                        // mailMessage1.IsBodyHtml = true;
+                        foreach (GridViewRow g in grdview_MultiEmail.Rows)
+                        {
+                            if (g.RowType == DataControlRowType.DataRow)
+                            {
+                                // mailMessage1.Bcc.Add(new MailAddress(g.Cells[0].Text.ToString()));
+                                // mailMessage1.To.Add(new MailAddress(g.Cells[0].Text.ToString()));
+                                var smtp = new SmtpClient
+                                {
+                                    Host = "relay-hosting.secureserver.net",
+                                    Port = 25,
+                                    EnableSsl = false,
+                                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                                    UseDefaultCredentials = false,
+                                    Credentials = new NetworkCredential("info@hanusol.com", "hanusol@2018")
+                                };
+                                var receiverEmail = g.Cells[0].Text.ToString();
+                                using (var mess = new System.Net.Mail.MailMessage("info@hanusol.com", receiverEmail)
+                                {
+                                    Subject = subject,
+                                    Body = message
+                                })
+                                    //SmtpClient smtp = new SmtpClient();
+                                    //smtp.Host = "relay-hosting.secureserver.net";
+                                    //smtp.Port = 25;
+                                    //smtp.EnableSsl = false;
+                                    //smtp.UseDefaultCredentials = false;
+                                    //NetworkCredential NetworkCred = new NetworkCredential();
+                                    //NetworkCred.UserName = mailMessage1.From.Address;
+                                    //NetworkCred.Password = "hanusol@2018";
+                                    // smtp.Credentials = NetworkCred;
+                                    // mailMessage1.Subject = subject;
+                                    //mailMessage1.Body = message;
+                                    smtp.Send(mess);
+                            }
+                        }
+
+                        grdview_MultiEmail.DataSource = null;
+                        grdview_MultiEmail.DataBind();
+                        txtmultiplemessg.Text = null;
+                        txtmulsub.Text = null;
+                        Displaygrid_Div.Style["display"] = "none";
+
+                        MySqlConnection MyConn2 = new MySqlConnection(MyConnection2);
+                        MySqlCommand MyCommand2 = new MySqlCommand("insert into hans.dashboard_details(Name,DateTime,count,Type,Role) values('" + base.Session["Email"].ToString() + "','" + DateTime.Now.Date.ToString() + "','" + base.Session["Rowount"].ToString() + "','Multiple','" + base.Session["Role"].ToString() + "');", MyConn2);
+                        MySqlDataReader MyReader2;
+                        MyConn2.Open();
+                        MyReader2 = MyCommand2.ExecuteReader();
+                        MyConn2.Close();
+                        Session["Rowount"] = null;
+                       // Session["MailType"] = null;
+                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Saved", "alert('Email sent successfully.')", true);
+
+                    }
+                    catch (Exception EX)
+                    {
+                        EX.ToString();
+                        ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Saved", "alert('Failed to send email.')", true);
+                    }
                 }
-                catch (Exception EX)
+                else
                 {
-                    EX.ToString();
-                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Saved", "alert('Failed to send email.')", true);
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Saved", "alert('Please enter all the mandatory fields')", true);
                 }
             }
             else
             {
-                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Saved", "alert('Please enter all the mandatory fields')", true);
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Saved", "alert('Your daily limit Exceeded')", true);
             }
         }
 
@@ -131,7 +133,7 @@ namespace MailMessage
                 loadGridView(dtExcel);
             }
             Session["Rowount"] = dtExcel.Rows.Count;
-            Session["MailType"] = "Multiple";
+           // Session["MailType"] = "Multiple";
             // working in local
 
             //StringBuilder sb = new StringBuilder();
@@ -178,13 +180,49 @@ namespace MailMessage
             //return "";
         }
 
+        public int Mailcount(string name)
+        {
+            int emailcount = 0;
+            try
+            {
+                // string MyConnection2 = "server = 50.62.209.108;port=3306; user id = sarasa; database = hans;password=@dmin@2018";
 
+                MySqlConnection MyConn2 = new MySqlConnection(MyConnection2);
+                MySqlCommand MyCommand2 = new MySqlCommand("SELECT sum(count) AS EmailCount FROM dashboard_details WHERE type in('single','multiple') and name='" + name + "' ;", MyConn2);
+                MyConn2.Open();
+                MySqlDataAdapter MyAdapter = new MySqlDataAdapter();
+                MyAdapter.SelectCommand = MyCommand2;
+                DataTable dTable = new DataTable();
+                MyAdapter.Fill(dTable);
+                if (dTable.Rows.Count > 0)
+                {
+                    foreach (DataRow row in dTable.Rows)
+                    {
+                        emailcount = Convert.ToInt32(row["EmailCount"].ToString());
+                    }
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "AlertLogin", "alert('Unable to fetch the email count limit')", true);
+                    return emailcount;
+                }
+
+                MyConn2.Close();
+            }
+            catch (Exception ex)
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "AlertLogin", "alert('Unable to fetch the email count limit')", true);
+                return emailcount;
+            }
+            return emailcount;
+        }
 
         protected void btn_upload_Click(object sender, EventArgs e)
         {
             if (Multipleemailupd.HasFile)
             {
-                string filename = Server.MapPath("testfolder") + "\\" + Multipleemailupd.FileName;
+                
+                string filename = Server.MapPath("testfolder") + "\\" + Multipleemailupd.FileName + DateTime.Now.ToString();
                 Multipleemailupd.SaveAs(filename);
                 Readexceel(filename);
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Saved", "alert(' File uploaded successfully ')", true);
@@ -211,7 +249,9 @@ namespace MailMessage
         protected void btn_bulkSampleExcel_Click(object sender, EventArgs e)
         {
             Response.Redirect("~/testfolder/SampleFile.xlsx");
-           
+
         }
+
+
     }
 }

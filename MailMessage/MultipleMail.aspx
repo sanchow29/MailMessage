@@ -33,20 +33,23 @@
         });
 
         function validatemultipleemail() {
-
-            if (document.getElementById("txtmultipletoemail").value == "") {
+             <%-- var multipletoemail = document.getElementById('<%=txtmultipletoemail.ClientID%>').value;--%>
+            var mulsub = document.getElementById('<%=txtmulsub.ClientID%>').value;
+            var multiplemessg = document.getElementById('<%=txtmultiplemessg.ClientID%>').value;
+          
+           <%-- if (multipletoemail == "") {
                 alert("To email can not be blank");
                 document.getElementById("<%=txtmultipletoemail.ClientID%>").focus();
                 return false;
-            }
-            if (document.getElementById("txtmulsub").value == "") {
+            }--%>
+            if (mulsub == "") {
                 alert("Subject can't be blank");
-                document.getElementById("txtmulsub").focus();
+                document.getElementById('<%=txtmulsub.ClientID%>').focus();
                 return false;
             }
-            if (document.getElementById("txtmultiplemessg").value == "") {
+            if (multiplemessg == "") {
                 alert("Message Field can't be blank");
-                document.getElementById("txtmultiplemessg").focus();
+                document.getElementById('<%=txtmultiplemessg.ClientID%>').focus();
                 return false;
             }
 
@@ -77,7 +80,7 @@
 
                                 <div class="col-md-4">
 
-                                    <asp:FileUpload ID="Multipleemailupd" runat="server" AllowMultiple="false" EnableViewState="true" />
+                                    <asp:FileUpload ID="Multipleemailupd" runat="server" AllowMultiple="false" EnableViewState="true" accept=".xlsx" />
                                     <asp:Button runat="server" ToolTip="Download Sample Upload Format" ID="btn_bulkSampleExcel" Text="Check Sample Excel Format"
                                         CssClass="btn btn-link" EnableViewState="true" ViewStateMode="Enabled" Style="text-decoration: underline; position: relative; right: 11px;" OnClick="btn_bulkSampleExcel_Click" />
 

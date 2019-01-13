@@ -10,7 +10,7 @@
 namespace MailMessage {
     
     
-    public partial class _Default {
+    public partial class Reports {
         
         /// <summary>
         /// GridView1 control.
@@ -20,23 +20,5 @@ namespace MailMessage {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView GridView1;
-        
-        /// <summary>
-        /// lblUsedcount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblUsedcount;
-        
-        /// <summary>
-        /// lblAsignedcount control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAsignedcount;
     }
 }

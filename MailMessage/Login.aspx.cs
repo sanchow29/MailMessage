@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
-using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
 
 namespace MailMessage
 {
     public partial class Login : System.Web.UI.Page
     {
+        private string MyConnection2 = "server = 50.62.209.108;port=3306; user id = sarasa; database = hans;password=@dmin@2018";
         protected void Page_Load(object sender, EventArgs e)
         {
             if(!IsPostBack)
@@ -27,10 +24,9 @@ namespace MailMessage
             {
 
                 try
-                {
-                    string MyConnection2 = "server = 50.62.209.108;port=3306; user id = sarasa; database = hans;password=@dmin@2018";
+                {                 
 
-                    string Query = "select * from hans.MailMessage_details where Email_ID='" + Login1.UserName + "' and Password='" + Login1.Password + "';";
+                    var Query = "select * from hans.MailMessage_details where Email_ID='" + Login1.UserName + "' and Password='" + Login1.Password + "';";
                     MySqlConnection MyConn2 = new MySqlConnection(MyConnection2);
                     MySqlCommand MyCommand2 = new MySqlCommand(Query, MyConn2);
                     MyConn2.Open();
@@ -47,6 +43,10 @@ namespace MailMessage
                             Session["LName"] = row["LName"].ToString();
                             Session["Email"] = row["Email_ID"].ToString();
                             Session["PHNO"] = row["Phone_Number"].ToString();
+                            Session["Role"] = row["Role"].ToString();
+                            Session["EmailLimit"] = row["EmailLimit"].ToString();
+                            Session["Status"] = row["Status"].ToString();
+                           
                         }
                         Response.Redirect("~/Default.aspx");
                     }
@@ -58,7 +58,7 @@ namespace MailMessage
 
                     MyConn2.Close();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "AlertLogin", "alert('Unable to login , Please try again')", true);
                     return;

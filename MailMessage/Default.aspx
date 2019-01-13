@@ -3,23 +3,33 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
     <div class="jumbotron">
-        Mail Dashboard
-          <div style="margin-top: 10px;">
-              <asp:GridView ID="GridView1" runat="server" CellPadding="4" ForeColor="#333333" GridLines="None">
-                  <AlternatingRowStyle BackColor="White" />
-                  <EditRowStyle BackColor="#2461BF" />
-                  <FooterStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                  <HeaderStyle BackColor="#507CD1" Font-Bold="True" ForeColor="White" />
-                  <PagerStyle BackColor="#2461BF" ForeColor="White" HorizontalAlign="Center" />
-                  <RowStyle BackColor="#EFF3FB" />
-                  <SelectedRowStyle BackColor="#D1DDF1" Font-Bold="True" ForeColor="#333333" />
-                  <SortedAscendingCellStyle BackColor="#F5F7FB" />
-                  <SortedAscendingHeaderStyle BackColor="#6D95E1" />
-                  <SortedDescendingCellStyle BackColor="#E9EBEF" />
-                  <SortedDescendingHeaderStyle BackColor="#4870BE" />
+       <h2>Mail Dashboard</h2> 
+      <div class="row"> 
+          <div style="margin-top: 10px;" class="col-md-8" >
+              <asp:GridView ID="GridView1" runat="server" CellPadding="4" ForeColor="Black" BackColor="#CCCCCC" BorderColor="#999999" BorderStyle="Solid" BorderWidth="3px" CellSpacing="2">
+                  <FooterStyle BackColor="#CCCCCC" />
+                  <HeaderStyle BackColor="Black" Font-Bold="True" ForeColor="White" />
+                  <PagerStyle BackColor="#CCCCCC" ForeColor="Black" HorizontalAlign="Left" />
+                  <RowStyle BackColor="White" />
+                  <SelectedRowStyle BackColor="#000099" Font-Bold="True" ForeColor="White" />
+                  <SortedAscendingCellStyle BackColor="#F1F1F1" />
+                  <SortedAscendingHeaderStyle BackColor="#808080" />
+                  <SortedDescendingCellStyle BackColor="#CAC9C9" />
+                  <SortedDescendingHeaderStyle BackColor="#383838" />
               </asp:GridView>
+          </div>
+
+        <div class="col-md-4" >
+          <h2>Email Count</h2>  
+            <div>
+                <h4> Used Count:</h4><asp:Label ID="lblUsedcount" runat="server" ></asp:Label>
+            </div>
+            <div>
+                 <h4> Asigned Count:</h4> <asp:Label ID="lblAsignedcount" runat="server" ></asp:Label>
+            </div>
+        </div>
           </div>
     </div>
 
-
+      
 </asp:Content>

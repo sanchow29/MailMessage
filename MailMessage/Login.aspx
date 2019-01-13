@@ -21,7 +21,24 @@
             transform: translate(-50%,-50%);
         }
     </style>
-
+       <script type="text/javascript">
+        function validate() {
+            var Fname = document.getElementById('<%=Login1.UserName%>').value;
+            var Lname = document.getElementById('<%=Login1.Password%>').value;
+               if (Fname == "") {
+                alert("please enter First Name!!");
+               document.getElementById('<%=Login1.UserName%>').focus();
+                return false;
+            }
+            if (Lname == "") {
+                alert("please enter Last Name!!");
+                document.getElementById('<%=Login1.Password%>').focus();
+                return false;
+            }
+            
+            return true;
+        }
+    </script>
 </head>
 <body>
     <form id="form1" runat="server">
@@ -63,7 +80,7 @@
                         <div class="row">
 
                             <div class="col-md-12" style="text-align: center;">
-
+                                
                                 <asp:TextBox ID="UserName" runat="server" CssClass="form-control input-lg"
                                     placeholder="test@test.com"></asp:TextBox>
                                 <asp:RequiredFieldValidator ID="UserNameRequired" runat="server"
@@ -76,7 +93,7 @@
                         <div class="row">
 
                             <div class="col-md-12" style="text-align: center;">
-
+                                 
                                 <asp:TextBox ID="Password" runat="server" TextMode="Password" CssClass="form-control input-lg"
                                     placeholder="Password"></asp:TextBox>
                                 <asp:RequiredFieldValidator ID="PasswordRequired" runat="server" ControlToValidate="Password"
@@ -91,7 +108,7 @@
                             <div class="col-md-12">
 
                                 <asp:Button ID="LoginButton" runat="server" CommandName="Login"
-                                    Text="Log In" ValidationGroup="Login1" CssClass="btn btn-primary form-control" />
+                                    Text="Log In" OnClientClick="javascript:return validate()" ValidationGroup="Login1" CssClass="btn btn-primary form-control" />
 
                             </div>
 
@@ -112,7 +129,7 @@
 
             <div style="position: fixed; bottom: 0; left: 50%; transform: translate(-50%,-50%);">
 
-                <p>&copy; 2018 - Mail Marketing Campaign</p>
+                <p>&copy; <%: DateTime.Now.Year %> - Mail Marketing Campaign</p>
 
             </div>
 

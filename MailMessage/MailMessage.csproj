@@ -121,7 +121,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="CreateUser.aspx" />
+    <Content Include="DeleteUser.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="Reports.aspx" />
+    <Content Include="Scripts\jquery.blockUI.js" />
+    <Content Include="Scripts\loadingAnim.gif" />
     <Content Include="SingleMail.aspx" />
     <Content Include="MultipleMail.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -183,13 +188,34 @@
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreateUser.aspx.cs">
+      <DependentUpon>CreateUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CreateUser.aspx.designer.cs">
+      <DependentUpon>CreateUser.aspx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="DeleteUser.aspx.cs">
+      <DependentUpon>DeleteUser.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DeleteUser.aspx.designer.cs">
+      <DependentUpon>DeleteUser.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Reports.aspx.cs">
+      <DependentUpon>Reports.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Reports.aspx.designer.cs">
+      <DependentUpon>Reports.aspx</DependentUpon>
     </Compile>
     <Compile Include="SingleMail.aspx.cs">
       <DependentUpon>SingleMail.aspx</DependentUpon>

@@ -16,20 +16,25 @@
 
         });
 
-        function validatesingleemail() {
-            if (document.getElementById("txtsinsletoemail").value == "") {
+        function validatesingleemail() {  
+             var sinsletoemail = document.getElementById('<%=txtsinsletoemail.ClientID%>').value;
+            var singlesub = document.getElementById('<%=txtsinglesub.ClientID%>').value;
+            var singlemessg = document.getElementById('<%=txtsinglemessg.ClientID%>').value;
+          
+
+            if (sinsletoemail == "") {
                 alert("To Email can't be blank");
-                document.getElementById("txtsinsletoemail").focus();
+               document.getElementById('<%=txtsinsletoemail.ClientID%>').focus();
                 return false;
             }
-            if (document.getElementById("txtsinglesub").value == "") {
+            if (singlesub == "") {
                 alert("Subject can't be blank");
-                document.getElementById("txtsinglesub").focus();
+                document.getElementById('<%=txtsinglesub.ClientID%>').focus();
                 return false;
             }
-            if (document.getElementById("txtsinglemessg").value == "") {
+            if (singlemessg == "") {
                 alert("Message Field can't be blank");
-                document.getElementById("txtsinglemessg").focus();
+                document.getElementById('<%=txtsinglemessg.ClientID%>').focus();
                 return false;
             }
             return true;
