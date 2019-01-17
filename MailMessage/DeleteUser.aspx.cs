@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.IO;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using MySql.Data.MySqlClient;
@@ -18,17 +19,40 @@ namespace MailMessage
         }
         private void BindGrid()
         {
-           // string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
-            string query = "SELECT Fname,Lname,Email_ID,Role,EmailLimit,Status FROM hans.MailMessage_details";
-            using (MySqlConnection con = new MySqlConnection(constr))
+            try
             {
-                using (MySqlDataAdapter sda = new MySqlDataAdapter(query, con))
+                // string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
+                string query = "SELECT UserId,Fname,Lname,Email_ID,Role,EmailLimit,Status FROM hans.MailMessage_details";
+                using (MySqlConnection con = new MySqlConnection(constr))
                 {
-                    using (DataTable dt = new DataTable())
+                    using (MySqlDataAdapter sda = new MySqlDataAdapter(query, con))
                     {
-                        sda.Fill(dt);
-                        GridView1.DataSource = dt;
-                        GridView1.DataBind();
+                        using (DataTable dt = new DataTable())
+                        {
+                            sda.Fill(dt);
+                            GridView1.DataSource = dt;
+                            GridView1.DataBind();
+                        }
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                string filePath = Server.MapPath("testfolder") + "\\" + "Catch.txt";
+
+                using (StreamWriter writer = new StreamWriter(filePath, true))
+                {
+                    writer.WriteLine("-----------------------------------------------------------------------------");
+                    writer.WriteLine("Date : " + DateTime.Now.ToString());
+                    writer.WriteLine();
+
+                    while (ex != null)
+                    {
+                        writer.WriteLine(ex.GetType().FullName);
+                        writer.WriteLine("Message : " + ex.Message);
+                        writer.WriteLine("StackTrace : " + ex.StackTrace);
+
+                        ex = ex.InnerException;
                     }
                 }
             }
@@ -72,34 +96,59 @@ namespace MailMessage
 
         protected void OnRowUpdating(object sender, GridViewUpdateEventArgs e)
         {
-            GridViewRow row = GridView1.Rows[e.RowIndex];
-           // int customerId = Convert.ToInt32(GridView1.DataKeys[e.RowIndex].Values[0]);
-            string Fname = (row.FindControl("txtFname") as TextBox).Text;
-            string Lname = (row.FindControl("txtLname") as TextBox).Text;
-           string EmailID = (row.FindControl("txtEmailid") as TextBox).Text;
-            string Role = (row.FindControl("txtRole") as TextBox).Text;
-            string EmailLimit = (row.FindControl("txtEmailLimit") as TextBox).Text;
-            string Status = (row.FindControl("txtStatus") as TextBox).Text;
-            string query = "UPDATE hans.MailMessage_details SET Fname=@Fname,Lname=@Lname,Role=@Role,EmailLimit=@EmailLimit,Status=@Status WHERE Email_ID=@Email_ID";
-           // string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            try
             {
-                using (MySqlCommand cmd = new MySqlCommand(query))
+                GridViewRow row = GridView1.Rows[e.RowIndex];
+                // int customerId = Convert.ToInt32(GridView1.DataKeys[e.RowIndex].Values[0]);
+                string UserId = (row.FindControl("txtuserid") as TextBox).Text;
+                string Fname = (row.FindControl("txtFname") as TextBox).Text;
+                string Lname = (row.FindControl("txtLname") as TextBox).Text;
+                string EmailID = (row.FindControl("txtEmailid") as TextBox).Text;
+                string Role = (row.FindControl("txtRole") as TextBox).Text;
+                string EmailLimit = (row.FindControl("txtEmailLimit") as TextBox).Text;
+                string Status = (row.FindControl("txtStatus") as TextBox).Text;
+                string query = "UPDATE hans.MailMessage_details SET Fname=@Fname,Lname=@Lname,Role=@Role,EmailLimit=@EmailLimit,Status=@Status WHERE Email_ID=@Email_ID and UserId=@UserId";
+                // string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
+                using (MySqlConnection con = new MySqlConnection(constr))
                 {
-                    cmd.Parameters.AddWithValue("@Fname", Fname);
-                    cmd.Parameters.AddWithValue("@Lname", Lname);
-                    cmd.Parameters.AddWithValue("@Email_ID", EmailID);
-                    cmd.Parameters.AddWithValue("@Role", Role);
-                    cmd.Parameters.AddWithValue("@EmailLimit", EmailLimit);
-                    cmd.Parameters.AddWithValue("@Status", Status);
-                    cmd.Connection = con;
-                    con.Open();
-                    cmd.ExecuteNonQuery();
-                    con.Close();
+                    using (MySqlCommand cmd = new MySqlCommand(query))
+                    {
+                        cmd.Parameters.AddWithValue("@Fname", Fname);
+                        cmd.Parameters.AddWithValue("@Lname", Lname);
+                        cmd.Parameters.AddWithValue("@Email_ID", EmailID);
+                        cmd.Parameters.AddWithValue("@Role", Role);
+                        cmd.Parameters.AddWithValue("@EmailLimit", EmailLimit);
+                        cmd.Parameters.AddWithValue("@Status", Status);
+                        cmd.Parameters.AddWithValue("@UserId", UserId);
+                        cmd.Connection = con;
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                }
+                GridView1.EditIndex = -1;
+                this.BindGrid();
+            }
+            catch(Exception ex)
+            {
+                string filePath = Server.MapPath("testfolder") + "\\" + "Catch.txt";
+
+                using (StreamWriter writer = new StreamWriter(filePath, true))
+                {
+                    writer.WriteLine("-----------------------------------------------------------------------------");
+                    writer.WriteLine("Date : " + DateTime.Now.ToString());
+                    writer.WriteLine();
+
+                    while (ex != null)
+                    {
+                        writer.WriteLine(ex.GetType().FullName);
+                        writer.WriteLine("Message : " + ex.Message);
+                        writer.WriteLine("StackTrace : " + ex.StackTrace);
+
+                        ex = ex.InnerException;
+                    }
                 }
             }
-            GridView1.EditIndex = -1;
-            this.BindGrid();
         }
 
         protected void OnRowCancelingEdit(object sender, EventArgs e)
@@ -110,23 +159,46 @@ namespace MailMessage
 
         protected void OnRowDeleting(object sender, GridViewDeleteEventArgs e)
         {
-            string EmailID = Convert.ToString (GridView1.DataKeys[e.RowIndex].Values[0]);
-           // int customerId = Convert.ToInt32(GridView1.DataKeys[e.RowIndex].Values[0]);
-            string query = "DELETE FROM hans.MailMessage_details WHERE Email_ID=@Email_ID";
-          //  string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            try
             {
-                using (MySqlCommand cmd = new MySqlCommand(query))
+                string userid = Convert.ToString(GridView1.DataKeys[e.RowIndex].Values[0]);
+                // int customerId = Convert.ToInt32(GridView1.DataKeys[e.RowIndex].Values[0]);
+                string query = "DELETE FROM hans.MailMessage_details WHERE userid=@UserId";
+                //  string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
+                using (MySqlConnection con = new MySqlConnection(constr))
                 {
-                    cmd.Parameters.AddWithValue("@Email_ID", EmailID);
-                    cmd.Connection = con;
-                    con.Open();
-                    cmd.ExecuteNonQuery();
-                    con.Close();
+                    using (MySqlCommand cmd = new MySqlCommand(query))
+                    {
+                        cmd.Parameters.AddWithValue("@UserId", userid);
+                        cmd.Connection = con;
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        con.Close();
+                    }
+                }
+
+                this.BindGrid();
+            }
+            catch(Exception ex)
+            {
+                string filePath = Server.MapPath("testfolder") + "\\" + "Catch.txt";
+
+                using (StreamWriter writer = new StreamWriter(filePath, true))
+                {
+                    writer.WriteLine("-----------------------------------------------------------------------------");
+                    writer.WriteLine("Date : " + DateTime.Now.ToString());
+                    writer.WriteLine();
+
+                    while (ex != null)
+                    {
+                        writer.WriteLine(ex.GetType().FullName);
+                        writer.WriteLine("Message : " + ex.Message);
+                        writer.WriteLine("StackTrace : " + ex.StackTrace);
+
+                        ex = ex.InnerException;
+                    }
                 }
             }
-
-            this.BindGrid();
         }
 
         protected void OnRowDataBound(object sender, GridViewRowEventArgs e)

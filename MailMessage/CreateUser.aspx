@@ -6,6 +6,7 @@
             var Fname = document.getElementById('<%=txtFname.ClientID%>').value;
             var Lname = document.getElementById('<%=txtLname.ClientID%>').value;
             var email = document.getElementById('<%=txtEmail.ClientID%>').value;
+            var userid = document.getElementById('<%=txtuserid.ClientID%>').value;
             var pwd = document.getElementById('<%=txtPwd.ClientID%>').value;
             var PhoneNo = document.getElementById('<%=txtPhoneNo.ClientID%>').value;
             var EmailLimit = document.getElementById('<%=txtEmailLimit.ClientID%>').value;
@@ -22,6 +23,11 @@
             if (email == "") {
                 alert("please enter Email!!");
                document.getElementById('<%=txtEmail.ClientID%>').focus();
+                return false;
+            }
+            if (userid == "") {
+                alert("please enter UserId!!");
+               document.getElementById('<%=txtuserid.ClientID%>').focus();
                 return false;
             }
             if (pwd == "" ) {
@@ -51,49 +57,39 @@
     <div class="jumbotron">
 
         <div>
-
-
             <label for="txtFname" class="form-control label label-default">First Name</label>
             <asp:TextBox ID="txtFname" CssClass="form-control input-sm" runat="server" TextMode="SingleLine"></asp:TextBox>
         </div>
         <div>
-
-
             <label for="txtLname" class="form-control label label-default">Last Name</label>
             <asp:TextBox ID="txtLname" CssClass="form-control input-sm" runat="server" TextMode="SingleLine"></asp:TextBox>
         </div>
         <div>
-
-
             <label for="txtEmail" class="form-control label label-default">EmailId</label>
             <asp:TextBox ID="txtEmail" CssClass="form-control input-sm" runat="server" TextMode="Email"></asp:TextBox>
         </div>
+         <div>
+            <label for="txtuserid" class="form-control label label-default">UserId</label>
+            <asp:TextBox ID="txtuserid" CssClass="form-control input-sm" runat="server" TextMode="SingleLine"></asp:TextBox>
+        </div>
         <div>
-
-
             <label for="txtPwd" class="form-control label label-default">Password</label>
             <asp:TextBox ID="txtPwd" CssClass="form-control input-sm" runat="server" TextMode="Password"></asp:TextBox>
         </div>
         <div>
-
-
             <label for="txtPhoneNo" class="form-control label label-default">Phone Number</label>
             <asp:TextBox ID="txtPhoneNo" CssClass="form-control input-sm" runat="server" TextMode="Phone"></asp:TextBox>
         </div>
         <div>
             <label for="rblRole" class="form-control label label-default">Role</label>
-
             <asp:RadioButtonList ID="rblRole" runat="server">
                 <asp:ListItem Text="User" Value="User" Selected="True">
-
                 </asp:ListItem>
-                <asp:ListItem Text="Admin" Value="Admin" />
+                <asp:ListItem Text="ReSeller" Value="ReSeller" />
             </asp:RadioButtonList>
 
         </div>
         <div>
-
-
             <label for="txtEmailLimit" class="form-control label label-default">Email Limit</label>
             <asp:TextBox ID="txtEmailLimit" CssClass="form-control input-sm" runat="server"></asp:TextBox>
         </div>

@@ -82,7 +82,7 @@
                             <div class="col-md-12" style="text-align: center;">
                                 
                                 <asp:TextBox ID="UserName" runat="server" CssClass="form-control input-lg"
-                                    placeholder="test@test.com"></asp:TextBox>
+                                    placeholder="User Id"></asp:TextBox>
                                 <asp:RequiredFieldValidator ID="UserNameRequired" runat="server"
                                     ControlToValidate="UserName" ErrorMessage="User Name is required." ToolTip="User Name is required." ValidationGroup="Login1">*</asp:RequiredFieldValidator>
 

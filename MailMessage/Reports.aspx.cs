@@ -24,20 +24,66 @@ namespace MailMessage
                 GridView1.DataBind();
             }
         }
-        
+
         protected void DownloadFile(object sender, EventArgs e)
         {
+            try
+            { 
             string filePath = (sender as LinkButton).CommandArgument;
             Response.ContentType = ContentType;
             Response.AppendHeader("Content-Disposition", "attachment; filename=" + Path.GetFileName(filePath));
             Response.WriteFile(filePath);
             Response.End();
+            }
+            catch(Exception ex)
+            {
+                string filePath = Server.MapPath("~/testfolder/Logs/") + "\\" + "Catch.txt";
+
+                using (StreamWriter writer = new StreamWriter(filePath, true))
+                {
+                    writer.WriteLine("-----------------------------------------------------------------------------");
+                    writer.WriteLine("Date : " + DateTime.Now.ToString());
+                    writer.WriteLine();
+
+                    while (ex != null)
+                    {
+                        writer.WriteLine(ex.GetType().FullName);
+                        writer.WriteLine("Message : " + ex.Message);
+                        writer.WriteLine("StackTrace : " + ex.StackTrace);
+
+                        ex = ex.InnerException;
+                    }
+                }
+            }
         }
         protected void DeleteFile(object sender, EventArgs e)
         {
-            string filePath = (sender as LinkButton).CommandArgument;
+            try
+            {
+                string filePath = (sender as LinkButton).CommandArgument;
             File.Delete(filePath);
             Response.Redirect(Request.Url.AbsoluteUri);
+            }
+            catch(Exception ex)
+            {
+                string filePath = Server.MapPath("testfolder") + "\\" + "Catch.txt";
+
+                using (StreamWriter writer = new StreamWriter(filePath, true))
+                {
+                    writer.WriteLine("-----------------------------------------------------------------------------");
+                    writer.WriteLine("Date : " + DateTime.Now.ToString());
+                    writer.WriteLine();
+
+                    while (ex != null)
+                    {
+                        writer.WriteLine(ex.GetType().FullName);
+                        writer.WriteLine("Message : " + ex.Message);
+                        writer.WriteLine("StackTrace : " + ex.StackTrace);
+
+                        ex = ex.InnerException;
+                    }
+                }
+            }
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Data;
 using MySql.Data.MySqlClient;
+using System.IO;
 
 namespace MailMessage
 {
@@ -26,7 +27,7 @@ namespace MailMessage
                 try
                 {                 
 
-                    var Query = "select * from hans.MailMessage_details where Email_ID='" + Login1.UserName + "' and Password='" + Login1.Password + "';";
+                    var Query = "select * from hans.MailMessage_details where UserID='" + Login1.UserName + "' and Password='" + Login1.Password + "';";
                     MySqlConnection MyConn2 = new MySqlConnection(MyConnection2);
                     MySqlCommand MyCommand2 = new MySqlCommand(Query, MyConn2);
                     MyConn2.Open();
@@ -42,6 +43,7 @@ namespace MailMessage
                             Session["FName"] = row["FName"].ToString();
                             Session["LName"] = row["LName"].ToString();
                             Session["Email"] = row["Email_ID"].ToString();
+                            Session["UserID"] = row["UserID"].ToString();
                             Session["PHNO"] = row["Phone_Number"].ToString();
                             Session["Role"] = row["Role"].ToString();
                             Session["EmailLimit"] = row["EmailLimit"].ToString();
@@ -60,6 +62,23 @@ namespace MailMessage
                 }
                 catch (Exception ex)
                 {
+                    string filePath = Server.MapPath("testfolder") + "\\" + "Catch.txt";
+
+                    using (StreamWriter writer = new StreamWriter(filePath, true))
+                    {
+                        writer.WriteLine("-----------------------------------------------------------------------------");
+                        writer.WriteLine("Date : " + DateTime.Now.ToString());
+                        writer.WriteLine();
+
+                        while (ex != null)
+                        {
+                            writer.WriteLine(ex.GetType().FullName);
+                            writer.WriteLine("Message : " + ex.Message);
+                            writer.WriteLine("StackTrace : " + ex.StackTrace);
+
+                            ex = ex.InnerException;
+                        }
+                    }
                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "AlertLogin", "alert('Unable to login , Please try again')", true);
                     return;
                 }

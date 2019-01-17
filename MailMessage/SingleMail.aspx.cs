@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Data;
 using MySql.Data.MySqlClient;
+using System.IO;
 
 namespace MailMessage
 {
@@ -12,9 +13,7 @@ namespace MailMessage
         private string MyConnection2 = "server = 50.62.209.108;port=3306; user id = sarasa; database = hans;password=@dmin@2018";
         protected void Page_Load(object sender, EventArgs e)
         {
-            string firstName = (string)(Session["FName"]);
-            string lastName = (string)(Session["LName"]);
-            if (string.IsNullOrEmpty(firstName) || string.IsNullOrEmpty(lastName))
+            if (string.IsNullOrEmpty((string)(base.Session["FName"])) || string.IsNullOrEmpty((string)(base.Session["LName"])))
             {
                 Response.Redirect("~/Login.aspx");
             }
@@ -30,7 +29,7 @@ namespace MailMessage
             string to = txtsinsletoemail.Text.ToString();
             string message = txtsinglemessg.Text.ToString();
             string subject = txtsinglesub.Text.ToString();
-            int limit = Mailcount(Session["Email"].ToString());
+            int limit = Mailcount(base.Session["UserID"].ToString());
             if (limit > Convert.ToInt32(base.Session["EmailLimit"].ToString()))
             {
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Saved", "alert('Your limit Exceeded')", true);
@@ -41,32 +40,28 @@ namespace MailMessage
                 {
                     try
                     {
-                        var senderEmail = new MailAddress("info@hanusol.com", "sender");
-                        var receiverEmail = new MailAddress(to, "Receiver");
-                        var password = "hanusol@2018";
-                        var sub = subject;
+                        string sub = subject;
                         var body = message;
-                        var smtp = new SmtpClient
-                        {
-                            Host = "relay-hosting.secureserver.net",
-                            Port = 25,
-                            EnableSsl = false,
-                            DeliveryMethod = SmtpDeliveryMethod.Network,
-                            UseDefaultCredentials = false,
-                            Credentials = new NetworkCredential(senderEmail.Address, password)
-                        };
-                        using (var mess = new System.Net.Mail.MailMessage(senderEmail, receiverEmail)
+                        using (var mess = new System.Net.Mail.MailMessage(new MailAddress(base.Session["Email"].ToString(), "sender"), new MailAddress(to, "receiver"))
                         {
                             Subject = subject,
                             Body = body
                         })
                         {
-                            smtp.Send(mess);
+                            new SmtpClient
+                            {
+                                Host = "relay-hosting.secureserver.net",
+                                Port = 25,
+                                EnableSsl = false,
+                                DeliveryMethod = SmtpDeliveryMethod.Network,
+                                UseDefaultCredentials = false,
+                                Credentials = new NetworkCredential("info@hanusol.com", "hanusol@2018")
+                            }.Send(mess);
                             txtsinsletoemail.Text = null;
-                            txtsinsletoemail.Text = null;
+                            txtsinglemessg.Text = null;
                             txtsinglesub.Text = null;
                             var MyConn2 = new MySqlConnection(MyConnection2);
-                            var MyCommand2 = new MySqlCommand("insert into hans.dashboard_details(Name,DateTime,count,Type,Role) values('" + base.Session["Email"].ToString() + "','" + DateTime.Now.Date.ToString() + "','1','Single','" + base.Session["Role"].ToString() + "');", MyConn2);
+                            var MyCommand2 = new MySqlCommand("insert into hans.dashboard_details(Name,DateTime,count,Type,Role) values('" + base.Session["UserID"].ToString() + "','" + DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss") + "','1','Single','" + base.Session["Role"].ToString() + "');", MyConn2);
                             MyConn2.Open();
                             var MyReader2 = MyCommand2.ExecuteReader();
                             MyConn2.Close();                           
@@ -75,8 +70,26 @@ namespace MailMessage
                     }
                     catch (Exception ex)
                     {
+                       
+                        string filePath = Server.MapPath("testfolder")+"\\"+ "Catch.txt";                     
+
+                        using (StreamWriter writer = new StreamWriter(filePath, true))
+                        {
+                            writer.WriteLine("-----------------------------------------------------------------------------");
+                            writer.WriteLine("Date : " + DateTime.Now.ToString());
+                            writer.WriteLine();
+
+                            while (ex != null)
+                            {
+                                writer.WriteLine(ex.GetType().FullName);
+                                writer.WriteLine("Message : " + ex.Message);
+                                writer.WriteLine("StackTrace : " + ex.StackTrace);
+
+                                ex = ex.InnerException;
+                            }
+                        }                       
                         ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Saved", "alert('Failed to send email.')", true);
-                        ex.ToString();
+                        
                     }
                 }
                 else
@@ -112,6 +125,23 @@ namespace MailMessage
             }
             catch (Exception ex)
             {
+                string filePath = Server.MapPath("testfolder") + "\\" + "Catch.txt";
+
+                using (StreamWriter writer = new StreamWriter(filePath, true))
+                {
+                    writer.WriteLine("-----------------------------------------------------------------------------");
+                    writer.WriteLine("Date : " + DateTime.Now.ToString());
+                    writer.WriteLine();
+
+                    while (ex != null)
+                    {
+                        writer.WriteLine(ex.GetType().FullName);
+                        writer.WriteLine("Message : " + ex.Message);
+                        writer.WriteLine("StackTrace : " + ex.StackTrace);
+
+                        ex = ex.InnerException;
+                    }
+                }
                 ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "AlertLogin", "alert('Unable to fetch the email count limit')", true);
                 return emailcount;
             }

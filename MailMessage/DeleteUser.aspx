@@ -32,10 +32,18 @@
         <asp:UpdatePanel ID="UpdatePanel1" runat="server">
             <ContentTemplate>
                 <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" OnRowDataBound="OnRowDataBound"
-                    DataKeyNames="Email_Id" OnRowEditing="OnRowEditing" OnRowCancelingEdit="OnRowCancelingEdit"
-                    PageSize="3" AllowPaging="true" OnPageIndexChanging="OnPaging" OnRowUpdating="OnRowUpdating"
+                    DataKeyNames="UserId" OnRowEditing="OnRowEditing" OnRowCancelingEdit="OnRowCancelingEdit"
+                    PageSize="10" AllowPaging="true" OnPageIndexChanging="OnPaging" OnRowUpdating="OnRowUpdating"
                     OnRowDeleting="OnRowDeleting" EmptyDataText="No records has been added." >
                     <Columns>
+                        <asp:TemplateField HeaderText="UserId" ItemStyle-Width="150">
+                            <ItemTemplate>
+                                <asp:Label ID="lbluserid" runat="server" Text='<%# Eval("UserId") %>'></asp:Label>
+                            </ItemTemplate>
+                            <EditItemTemplate>
+                                <asp:TextBox ID="txtuserid" runat="server" ReadOnly="true" Text='<%# Eval("UserId") %>' Width="140"></asp:TextBox>
+                            </EditItemTemplate>
+                        </asp:TemplateField>
                         <asp:TemplateField HeaderText="Name" ItemStyle-Width="150">
                             <ItemTemplate>
                                 <asp:Label ID="lblName" runat="server" Text='<%# Eval("Fname") %>'></asp:Label>
@@ -65,6 +73,7 @@
                                 <asp:Label ID="lblRole" runat="server" Text='<%# Eval("Role") %>'></asp:Label>
                             </ItemTemplate>
                             <EditItemTemplate>
+                                
                                 <asp:TextBox ID="txtRole" runat="server" Text='<%# Eval("Role") %>' Width="140"></asp:TextBox>
                             </EditItemTemplate>
                         </asp:TemplateField>
