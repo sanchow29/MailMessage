@@ -12,9 +12,14 @@ namespace MailMessage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty((string)(base.Session["FName"])) || string.IsNullOrEmpty((string)(base.Session["LName"])))
+            {
+                Response.Redirect("~/Login.aspx");
+            }
+            
             if (!IsPostBack)
             {
-                string[] filePaths = Directory.GetFiles(Server.MapPath("~/testfolder/"));
+                string[] filePaths = Directory.GetFiles(Server.MapPath("~/testfolder/Uploads/"));
                 List<ListItem> files = new List<ListItem>();
                 foreach (string filePath in filePaths)
                 {
@@ -58,29 +63,39 @@ namespace MailMessage
         }
         protected void DeleteFile(object sender, EventArgs e)
         {
-            try
+            if (base.Session["Role"].ToString() == "User")
             {
-                string filePath = (sender as LinkButton).CommandArgument;
-            File.Delete(filePath);
-            Response.Redirect(Request.Url.AbsoluteUri);
+               
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "AlertLogin", "alert('You don't have rights to see this page!!')", true);
+                    Response.Redirect("~/SiteAcess.aspx");
+               
             }
-            catch(Exception ex)
+            else
             {
-                string filePath = Server.MapPath("testfolder") + "\\" + "Catch.txt";
-
-                using (StreamWriter writer = new StreamWriter(filePath, true))
+                try
                 {
-                    writer.WriteLine("-----------------------------------------------------------------------------");
-                    writer.WriteLine("Date : " + DateTime.Now.ToString());
-                    writer.WriteLine();
+                    string filePath = (sender as LinkButton).CommandArgument;
+                    File.Delete(filePath);
+                    Response.Redirect(Request.Url.AbsoluteUri);
+                }
+                catch (Exception ex)
+                {
+                    string filePath = Server.MapPath("~/testfolder/Logs/") + "\\" + "Catch.txt";
 
-                    while (ex != null)
+                    using (StreamWriter writer = new StreamWriter(filePath, true))
                     {
-                        writer.WriteLine(ex.GetType().FullName);
-                        writer.WriteLine("Message : " + ex.Message);
-                        writer.WriteLine("StackTrace : " + ex.StackTrace);
+                        writer.WriteLine("-----------------------------------------------------------------------------");
+                        writer.WriteLine("Date : " + DateTime.Now.ToString());
+                        writer.WriteLine();
 
-                        ex = ex.InnerException;
+                        while (ex != null)
+                        {
+                            writer.WriteLine(ex.GetType().FullName);
+                            writer.WriteLine("Message : " + ex.Message);
+                            writer.WriteLine("StackTrace : " + ex.StackTrace);
+
+                            ex = ex.InnerException;
+                        }
                     }
                 }
             }

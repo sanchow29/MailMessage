@@ -42,19 +42,29 @@ namespace MailMessage
                     {
                         string sub = subject;
                         var body = message;
-                        using (var mess = new System.Net.Mail.MailMessage(new MailAddress(base.Session["Email"].ToString(), "sender"), new MailAddress(to, "receiver"))
+                       
+                        using (var mess = new System.Net.Mail.MailMessage(new MailAddress(base.Session["Email"].ToString(), base.Session["FName"].ToString()), new MailAddress(to, "receiver"))
                         {
                             Subject = subject,
                             Body = body
+                            
                         })
                         {
+                           
+                            if (fileUpload.HasFile)
+                            {
+                                string FileName = Path.GetFileName(fileUpload.PostedFile.FileName);
+                                mess.Attachments.Add(new Attachment(fileUpload.PostedFile.InputStream, FileName));
+                            }                               
+                           
+                            mess.IsBodyHtml = true;
                             new SmtpClient
                             {
                                 Host = "relay-hosting.secureserver.net",
                                 Port = 25,
                                 EnableSsl = false,
                                 DeliveryMethod = SmtpDeliveryMethod.Network,
-                                UseDefaultCredentials = false,
+                                UseDefaultCredentials = false,                                
                                 Credentials = new NetworkCredential("info@hanusol.com", "hanusol@2018")
                             }.Send(mess);
                             txtsinsletoemail.Text = null;
@@ -71,7 +81,7 @@ namespace MailMessage
                     catch (Exception ex)
                     {
                        
-                        string filePath = Server.MapPath("testfolder")+"\\"+ "Catch.txt";                     
+                        string filePath = Server.MapPath("~/testfolder/Logs/") +"\\"+ "Catch.txt";                     
 
                         using (StreamWriter writer = new StreamWriter(filePath, true))
                         {
@@ -125,7 +135,7 @@ namespace MailMessage
             }
             catch (Exception ex)
             {
-                string filePath = Server.MapPath("testfolder") + "\\" + "Catch.txt";
+                string filePath = Server.MapPath("~/testfolder/Logs/") + "\\" + "Catch.txt";
 
                 using (StreamWriter writer = new StreamWriter(filePath, true))
                 {

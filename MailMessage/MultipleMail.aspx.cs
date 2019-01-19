@@ -38,16 +38,25 @@ namespace MailMessage
                 if (!string.IsNullOrEmpty(message) && !string.IsNullOrEmpty(subject))
                 {
                     try
-                    {                        
+                    {
+                        var mess = new System.Net.Mail.MailMessage() ;
+                       
                         foreach (GridViewRow g in grdview_MultiEmail.Rows)
                         {
                             if (g.RowType == DataControlRowType.DataRow)
-                            {                                
-                                using (var mess = new System.Net.Mail.MailMessage(base.Session["Email"].ToString(), g.Cells[0].Text.ToString())
+                            {
+                                using (mess = new System.Net.Mail.MailMessage(base.Session["Email"].ToString(),g.Cells[0].Text.ToString())
                                 {
                                     Subject = subject,
                                     Body = message
                                 })
+                                { 
+                                    if (fileuploadAttachments_Multiple.HasFile)
+                                    {
+                                        string FileName = Path.GetFileName(fileuploadAttachments_Multiple.PostedFile.FileName);
+                                        mess.Attachments.Add(new Attachment(fileuploadAttachments_Multiple.PostedFile.InputStream, FileName));
+                                    }
+                                    mess.IsBodyHtml = true;
                                     new SmtpClient
                                     {
                                         Host = "relay-hosting.secureserver.net",
@@ -57,6 +66,7 @@ namespace MailMessage
                                         UseDefaultCredentials = false,
                                         Credentials = new NetworkCredential("info@hanusol.com", "hanusol@2018")
                                     }.Send(mess);
+                                }
                             }
                         }
                         grdview_MultiEmail.DataSource = null;
@@ -75,7 +85,7 @@ namespace MailMessage
                     }
                     catch (Exception ex)
                     {
-                        string filePath = Server.MapPath("testfolder") + "\\" + "Catch.txt";
+                        string filePath = Server.MapPath("~/testfolder/Logs/") + "\\" + "Catch.txt";
                         using (StreamWriter writer = new StreamWriter(filePath, true))
                         {
                             writer.WriteLine("-----------------------------------------------------------------------------");
@@ -201,7 +211,7 @@ namespace MailMessage
             }
             catch (Exception ex)
             {
-                string filePath = Server.MapPath("testfolder") + "\\" + "Catch.txt";
+                string filePath = Server.MapPath("~/testfolder/Logs/") + "\\" + "Catch.txt";
 
                 using (StreamWriter writer = new StreamWriter(filePath, true))
                 {
@@ -226,11 +236,13 @@ namespace MailMessage
 
         protected void btn_upload_Click(object sender, EventArgs e)
         {
+           
+            string name = base.Session["UserID"].ToString()  ;
             try
             {
                 if (Multipleemailupd.HasFile)
                 {
-                    string filename = Server.MapPath("testfolder") + "\\" + Multipleemailupd.FileName;
+                    string filename = Server.MapPath("/testfolder/Uploads/") + name + "_" + Multipleemailupd.FileName ;
                     Multipleemailupd.SaveAs(filename);
                     Readexceel(filename);
                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Saved", "alert(' File uploaded successfully ')", true);
@@ -240,7 +252,7 @@ namespace MailMessage
 
             catch (Exception ex)
             {
-                string filePath = Server.MapPath("testfolder") + "\\" + "Catch.txt";
+                string filePath = Server.MapPath("~/testfolder/Logs/") + "\\" + "Catch.txt";
 
                 using (StreamWriter writer = new StreamWriter(filePath, true))
                 {
@@ -274,7 +286,7 @@ namespace MailMessage
             }
             catch (Exception ex)
             {
-                string filePath = Server.MapPath("testfolder") + "\\" + "Catch.txt";
+                string filePath = Server.MapPath("~/testfolder/Logs/") + "\\" + "Catch.txt";
 
                 using (StreamWriter writer = new StreamWriter(filePath, true))
                 {

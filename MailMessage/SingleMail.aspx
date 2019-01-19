@@ -107,13 +107,13 @@
                         </div>
 
                         <div class="col-md-3">
-                            <asp:FileUpload runat="server" ID="fileUploadAttachemnts_Single" AllowMultiple="true" />
+                            <asp:FileUpload runat="server" ID="fileUpload" EnableViewState="true" />
                         </div>
 
-                        <div class="col-md-2">
+                       <%-- <div class="col-md-2">
                             <asp:Button runat="server" ID="btn_Attchaments_Single" Text="Upload Attachments" CssClass="btn btn-primary"
                                 ClientIDMode="Static" EnableViewState="true" ViewStateMode="Enabled" />
-                        </div>
+                        </div>--%>
 
                     </div>
 
@@ -162,6 +162,7 @@
             <%--<asp:AsyncPostBackTrigger ControlID="radioButton_SinglePage" EventName="CheckedChanged" />
                     <asp:AsyncPostBackTrigger ControlID="radioButton_Multipage" EventName="CheckedChanged" />--%>
             <%--<asp:PostBackTrigger ControlID="btn_upload" />--%>
+            <asp:PostBackTrigger ControlID="btnsendsinglemail" />
         </Triggers>
 
     </asp:UpdatePanel>

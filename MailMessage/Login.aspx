@@ -22,22 +22,26 @@
         }
     </style>
        <script type="text/javascript">
-        function validate() {
-            var Fname = document.getElementById('<%=Login1.UserName%>').value;
-            var Lname = document.getElementById('<%=Login1.Password%>').value;
+
+           function validate() {
+            
+            var Fname = document.getElementById('<%=UserName.ClientID%>').value;
+            var Lname = document.getElementById('<%=Password.ClientID%>').value;
                if (Fname == "") {
-                alert("please enter First Name!!");
-               document.getElementById('<%=Login1.UserName%>').focus();
+                alert("please enter User Id to proceed!!");
+                document.getElementById('<%=UserName.ClientID%>').focus();
                 return false;
             }
             if (Lname == "") {
-                alert("please enter Last Name!!");
-                document.getElementById('<%=Login1.Password%>').focus();
+                alert("please enter Password to proceed!!");
+                document.getElementById('<%=Password.ClientID%>').focus();
                 return false;
             }
             
             return true;
-        }
+            
+           }
+
     </script>
 </head>
 <body>
@@ -60,9 +64,9 @@
 
             </div>--%>
 
-            <asp:Login ID="Login1" runat="server" OnAuthenticate="Login1_Authenticate">
+            <%--<asp:Login ID="Login1" runat="server" OnAuthenticate="Login1_Authenticate">
 
-                <LayoutTemplate>
+                <LayoutTemplate>--%>
 
                     <div class="container" id="div_loginContainer">
 
@@ -83,32 +87,32 @@
                                 
                                 <asp:TextBox ID="UserName" runat="server" CssClass="form-control input-lg"
                                     placeholder="User Id"></asp:TextBox>
-                                <asp:RequiredFieldValidator ID="UserNameRequired" runat="server"
-                                    ControlToValidate="UserName" ErrorMessage="User Name is required." ToolTip="User Name is required." ValidationGroup="Login1">*</asp:RequiredFieldValidator>
+                                <%--<asp:RequiredFieldValidator ID="UserNameRequired" runat="server"
+                                    ControlToValidate="UserName" ErrorMessage="User Name is required." ToolTip="User Name is required." ValidationGroup="Login1">*</asp:RequiredFieldValidator>--%>
 
                             </div>
 
                         </div>
 
-                        <div class="row">
+                        <div class="row" style="margin-top:15px;">
 
                             <div class="col-md-12" style="text-align: center;">
                                  
                                 <asp:TextBox ID="Password" runat="server" TextMode="Password" CssClass="form-control input-lg"
                                     placeholder="Password"></asp:TextBox>
-                                <asp:RequiredFieldValidator ID="PasswordRequired" runat="server" ControlToValidate="Password"
-                                    ErrorMessage="Password is required." ToolTip="Password is required." ValidationGroup="Login1">*</asp:RequiredFieldValidator>
+                                <%--<asp:RequiredFieldValidator ID="PasswordRequired" runat="server" ControlToValidate="Password"
+                                    ErrorMessage="Password is required." ToolTip="Password is required." ValidationGroup="Login1">*</asp:RequiredFieldValidator>--%>
 
                             </div>
 
                         </div>
 
-                        <div class="row" style="margin-bottom: 10px;">
+                        <div class="row" style="margin-bottom: 10px;margin-top:15px;">
 
                             <div class="col-md-12">
 
                                 <asp:Button ID="LoginButton" runat="server" CommandName="Login"
-                                    Text="Log In" OnClientClick="javascript:return validate()" ValidationGroup="Login1" CssClass="btn btn-primary form-control" />
+                                    Text="Log In" OnClientClick="javascript:return validate()" ValidationGroup="Login1" CssClass="btn btn-primary form-control" OnClick="LoginButton_Click" />
 
                             </div>
 
@@ -123,9 +127,9 @@
                         </div>--%>
                     </div>
 
-                </LayoutTemplate>
+                <%--</LayoutTemplate>
 
-            </asp:Login>
+            </asp:Login>--%>
 
             <div style="position: fixed; bottom: 0; left: 50%; transform: translate(-50%,-50%);">
 

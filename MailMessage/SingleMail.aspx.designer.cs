@@ -58,22 +58,13 @@ namespace MailMessage {
         protected global::System.Web.UI.WebControls.TextBox txtsinglemessg;
         
         /// <summary>
-        /// fileUploadAttachemnts_Single control.
+        /// fileUpload control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.FileUpload fileUploadAttachemnts_Single;
-        
-        /// <summary>
-        /// btn_Attchaments_Single control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_Attchaments_Single;
+        protected global::System.Web.UI.WebControls.FileUpload fileUpload;
         
         /// <summary>
         /// btnsendsinglemail control.

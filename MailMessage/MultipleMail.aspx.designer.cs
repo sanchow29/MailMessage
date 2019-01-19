@@ -94,15 +94,6 @@ namespace MailMessage {
         protected global::System.Web.UI.WebControls.FileUpload fileuploadAttachments_Multiple;
         
         /// <summary>
-        /// btn_uploadAttachments_Multiple control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Button btn_uploadAttachments_Multiple;
-        
-        /// <summary>
         /// btnsendmultipleemail control.
         /// </summary>
         /// <remarks>

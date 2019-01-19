@@ -151,13 +151,13 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <asp:FileUpload runat="server" ID="fileuploadAttachments_Multiple" AllowMultiple="true" />
+                                    <asp:FileUpload runat="server" ID="fileuploadAttachments_Multiple" EnableViewState="true" />
                                 </div>
 
-                                <div class="col-md-3">
+                                <%--<div class="col-md-3">
                                     <asp:Button runat="server" ID="btn_uploadAttachments_Multiple" CssClass="btn btn-primary"
                                         EnableViewState="true" ViewStateMode="Enabled" Text="Upload Attachments" />
-                                </div>
+                                </div>--%>
 
                             </div>
 

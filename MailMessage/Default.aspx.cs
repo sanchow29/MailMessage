@@ -54,7 +54,7 @@ namespace MailMessage
 
             catch (Exception ex)
             {
-                string filePath = Server.MapPath("testfolder") + "\\" + "Catch.txt";
+                string filePath = Server.MapPath("~/testfolder/Logs/") + "\\" + "Catch.txt";
 
                 using (StreamWriter writer = new StreamWriter(filePath, true))
                 {
@@ -124,7 +124,7 @@ namespace MailMessage
             }
             catch (Exception ex)
             {
-                string filePath = Server.MapPath("testfolder") + "\\" + "Catch.txt";
+                string filePath = Server.MapPath("~/testfolder/Logs/") + "\\" + "Catch.txt";
 
                 using (StreamWriter writer = new StreamWriter(filePath, true))
                 {
@@ -176,7 +176,7 @@ namespace MailMessage
             }
             catch( Exception ex)
             {
-                string filePath = Server.MapPath("testfolder") + "\\" + "Catch.txt";
+                string filePath = Server.MapPath("~/testfolder/Logs/") + "\\" + "Catch.txt";
 
                 using (StreamWriter writer = new StreamWriter(filePath, true))
                 {

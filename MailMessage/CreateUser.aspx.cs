@@ -9,9 +9,23 @@ namespace MailMessage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty((string)(base.Session["FName"])) || string.IsNullOrEmpty((string)(base.Session["LName"])))
+            {
+                Response.Redirect("~/Login.aspx");
+            }
+            if (!IsPostBack)
+            {
+                string role = base.Session["Role"].ToString();
+                if (role == "User")
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "AlertLogin", "alert('You don't have rights to see this page!!')", true);
+                    Response.Redirect("~/SiteAcess.aspx");
+                }
+            }
             //clear all the textbox values
         }
 
+       
         protected void btncreateuser_Click(object sender, EventArgs e)
         {
             try
@@ -45,12 +59,12 @@ namespace MailMessage
                     txtPhoneNo.Text = null;
                     txtEmailLimit.Text = null;
 
-                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Saved", "alert('Details updated successfully.')", true);
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "AlertLogin", "alert('User Created successfully.')", true);
                 }
             }
             catch(Exception ex)
             {
-                string filePath = Server.MapPath("testfolder") + "\\" + "Catch.txt";
+                string filePath = Server.MapPath("~/testfolder/Logs/") + "\\" + "Catch.txt";
 
                 using (StreamWriter writer = new StreamWriter(filePath, true))
                 {

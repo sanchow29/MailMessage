@@ -85,7 +85,7 @@
             <asp:RadioButtonList ID="rblRole" runat="server">
                 <asp:ListItem Text="User" Value="User" Selected="True">
                 </asp:ListItem>
-                <asp:ListItem Text="ReSeller" Value="ReSeller" />
+                <asp:ListItem Text="ReSeller" Value="Admin" />
             </asp:RadioButtonList>
 
         </div>

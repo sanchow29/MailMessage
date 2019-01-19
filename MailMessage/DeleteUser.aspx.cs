@@ -12,8 +12,19 @@ namespace MailMessage
         string constr= "server = 50.62.209.108;port=3306; user id = sarasa; database = hans;password=@dmin@2018";
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty((string)(base.Session["FName"])) || string.IsNullOrEmpty((string)(base.Session["LName"])))
+            {
+                Response.Redirect("~/Login.aspx");
+            }
+           
             if (!this.IsPostBack)
             {
+                string role = base.Session["Role"].ToString();
+                if (role == "User")
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "AlertLogin", "alert('You don't have rights to see this page!!')", true);
+                    Response.Redirect("~/SiteAcess.aspx");
+                }
                 this.BindGrid();
             }
         }
@@ -38,7 +49,7 @@ namespace MailMessage
             }
             catch(Exception ex)
             {
-                string filePath = Server.MapPath("testfolder") + "\\" + "Catch.txt";
+                string filePath = Server.MapPath("~/testfolder/Logs/") + "\\" + "Catch.txt";
 
                 using (StreamWriter writer = new StreamWriter(filePath, true))
                 {
@@ -131,7 +142,7 @@ namespace MailMessage
             }
             catch(Exception ex)
             {
-                string filePath = Server.MapPath("testfolder") + "\\" + "Catch.txt";
+                string filePath = Server.MapPath("~/testfolder/Logs/") + "\\" + "Catch.txt";
 
                 using (StreamWriter writer = new StreamWriter(filePath, true))
                 {
@@ -181,7 +192,7 @@ namespace MailMessage
             }
             catch(Exception ex)
             {
-                string filePath = Server.MapPath("testfolder") + "\\" + "Catch.txt";
+                string filePath = Server.MapPath("~/testfolder/Logs/") + "\\" + "Catch.txt";
 
                 using (StreamWriter writer = new StreamWriter(filePath, true))
                 {
