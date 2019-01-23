@@ -19,12 +19,12 @@ namespace MailMessage
            
             if (!this.IsPostBack)
             {
-                string role = base.Session["Role"].ToString();
-                if (role == "User")
-                {
-                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "AlertLogin", "alert('You don't have rights to see this page!!')", true);
-                    Response.Redirect("~/SiteAcess.aspx");
-                }
+                //string role = base.Session["Role"].ToString();
+                //if (role == "User")
+                //{
+                //    ScriptManager.RegisterClientScriptBlock(this, GetType(), "AlertLogin", "alert('You don't have rights to see this page!!')", true);
+                //    Response.Redirect("~/SiteAcess.aspx");
+                //}
                 this.BindGrid();
             }
         }
@@ -32,19 +32,40 @@ namespace MailMessage
         {
             try
             {
-                // string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
-                string query = "SELECT UserId,Fname,Lname,Email_ID,Role,EmailLimit,Status FROM hans.MailMessage_details";
-                using (MySqlConnection con = new MySqlConnection(constr))
-                {
-                    using (MySqlDataAdapter sda = new MySqlDataAdapter(query, con))
+                string user= base.Session["UserID"].ToString();
+                string role = base.Session["Role"].ToString();
+                if (role == "SuperAdmin")
+                {                    
+                    string query = "SELECT UserId,Fname,Lname,Email_ID,Role,EmailLimit,Status FROM hans.MailMessage_details";
+                    using (MySqlConnection con = new MySqlConnection(constr))
                     {
-                        using (DataTable dt = new DataTable())
+                        using (MySqlDataAdapter sda = new MySqlDataAdapter(query, con))
                         {
-                            sda.Fill(dt);
-                            GridView1.DataSource = dt;
-                            GridView1.DataBind();
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                GridView1.DataSource = dt;
+                                GridView1.DataBind();
+                            }
                         }
                     }
+                }
+                else
+                {                    
+                    string query = "select * from MailMessage_details where MasterUser in(select MasterUser from MailMessage_details where MasterUser='"+user+"')";
+                    using (MySqlConnection con = new MySqlConnection(constr))
+                    {
+                        using (MySqlDataAdapter sda = new MySqlDataAdapter(query, con))
+                        {
+                            using (DataTable dt = new DataTable())
+                            {
+                                sda.Fill(dt);
+                                GridView1.DataSource = dt;
+                                GridView1.DataBind();
+                            }
+                        }
+                    }
+
                 }
             }
             catch(Exception ex)
@@ -109,36 +130,44 @@ namespace MailMessage
         {
             try
             {
-                GridViewRow row = GridView1.Rows[e.RowIndex];
-                // int customerId = Convert.ToInt32(GridView1.DataKeys[e.RowIndex].Values[0]);
-                string UserId = (row.FindControl("txtuserid") as TextBox).Text;
-                string Fname = (row.FindControl("txtFname") as TextBox).Text;
-                string Lname = (row.FindControl("txtLname") as TextBox).Text;
-                string EmailID = (row.FindControl("txtEmailid") as TextBox).Text;
-                string Role = (row.FindControl("txtRole") as TextBox).Text;
-                string EmailLimit = (row.FindControl("txtEmailLimit") as TextBox).Text;
-                string Status = (row.FindControl("txtStatus") as TextBox).Text;
-                string query = "UPDATE hans.MailMessage_details SET Fname=@Fname,Lname=@Lname,Role=@Role,EmailLimit=@EmailLimit,Status=@Status WHERE Email_ID=@Email_ID and UserId=@UserId";
-                // string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
-                using (MySqlConnection con = new MySqlConnection(constr))
+                string role = base.Session["Role"].ToString();
+                if (role == "SuperAdmin" || role == "Admin")
                 {
-                    using (MySqlCommand cmd = new MySqlCommand(query))
+                    GridViewRow row = GridView1.Rows[e.RowIndex];
+                    // int customerId = Convert.ToInt32(GridView1.DataKeys[e.RowIndex].Values[0]);
+                    string UserId = (row.FindControl("txtuserid") as TextBox).Text;
+                    string Fname = (row.FindControl("txtFname") as TextBox).Text;
+                    string Lname = (row.FindControl("txtLname") as TextBox).Text;
+                    string EmailID = (row.FindControl("txtEmailid") as TextBox).Text;
+                    string Role = (row.FindControl("txtRole") as TextBox).Text;
+                    string EmailLimit = (row.FindControl("txtEmailLimit") as TextBox).Text;
+                    string Status = (row.FindControl("txtStatus") as TextBox).Text;
+                    string query = "UPDATE hans.MailMessage_details SET Fname=@Fname,Lname=@Lname,Role=@Role,EmailLimit=@EmailLimit,Status=@Status WHERE Email_ID=@Email_ID and UserId=@UserId";
+                    // string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
+                    using (MySqlConnection con = new MySqlConnection(constr))
                     {
-                        cmd.Parameters.AddWithValue("@Fname", Fname);
-                        cmd.Parameters.AddWithValue("@Lname", Lname);
-                        cmd.Parameters.AddWithValue("@Email_ID", EmailID);
-                        cmd.Parameters.AddWithValue("@Role", Role);
-                        cmd.Parameters.AddWithValue("@EmailLimit", EmailLimit);
-                        cmd.Parameters.AddWithValue("@Status", Status);
-                        cmd.Parameters.AddWithValue("@UserId", UserId);
-                        cmd.Connection = con;
-                        con.Open();
-                        cmd.ExecuteNonQuery();
-                        con.Close();
+                        using (MySqlCommand cmd = new MySqlCommand(query))
+                        {
+                            cmd.Parameters.AddWithValue("@Fname", Fname);
+                            cmd.Parameters.AddWithValue("@Lname", Lname);
+                            cmd.Parameters.AddWithValue("@Email_ID", EmailID);
+                            cmd.Parameters.AddWithValue("@Role", Role);
+                            cmd.Parameters.AddWithValue("@EmailLimit", EmailLimit);
+                            cmd.Parameters.AddWithValue("@Status", Status);
+                            cmd.Parameters.AddWithValue("@UserId", UserId);
+                            cmd.Connection = con;
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                            con.Close();
+                        }
                     }
+                    GridView1.EditIndex = -1;
+                    this.BindGrid();
                 }
-                GridView1.EditIndex = -1;
-                this.BindGrid();
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "Alert", "alert('You don't have rights to see this page!!')", true);
+                }
             }
             catch(Exception ex)
             {
@@ -172,23 +201,31 @@ namespace MailMessage
         {
             try
             {
-                string userid = Convert.ToString(GridView1.DataKeys[e.RowIndex].Values[0]);
-                // int customerId = Convert.ToInt32(GridView1.DataKeys[e.RowIndex].Values[0]);
-                string query = "DELETE FROM hans.MailMessage_details WHERE userid=@UserId";
-                //  string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
-                using (MySqlConnection con = new MySqlConnection(constr))
+                string role = base.Session["Role"].ToString();
+                if (role == "SuperAdmin")
                 {
-                    using (MySqlCommand cmd = new MySqlCommand(query))
+                    string userid = Convert.ToString(GridView1.DataKeys[e.RowIndex].Values[0]);
+                    // int customerId = Convert.ToInt32(GridView1.DataKeys[e.RowIndex].Values[0]);
+                    string query = "DELETE FROM hans.MailMessage_details WHERE userid=@UserId";
+                    //  string constr = ConfigurationManager.ConnectionStrings["constr"].ConnectionString;
+                    using (MySqlConnection con = new MySqlConnection(constr))
                     {
-                        cmd.Parameters.AddWithValue("@UserId", userid);
-                        cmd.Connection = con;
-                        con.Open();
-                        cmd.ExecuteNonQuery();
-                        con.Close();
+                        using (MySqlCommand cmd = new MySqlCommand(query))
+                        {
+                            cmd.Parameters.AddWithValue("@UserId", userid);
+                            cmd.Connection = con;
+                            con.Open();
+                            cmd.ExecuteNonQuery();
+                            con.Close();
+                        }
                     }
-                }
 
-                this.BindGrid();
+                    this.BindGrid();
+                }
+                else
+                {
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "Alert", "alert('You don't have rights to see this page!!')", true);
+                }
             }
             catch(Exception ex)
             {

@@ -12,6 +12,48 @@ namespace MailMessage
         protected void Page_Load(object sender, EventArgs e)
         {
 
+            if (!IsPostBack)
+            {
+                styleMenuPages();
+            }
+
+        }
+
+        public void styleMenuPages()
+        {
+            string role = base.Session["Role"].ToString();
+            if (role == "User")
+            {
+                listItem_admin.Style["display"] = "None";
+            }
+
+            if (Request.Url.AbsoluteUri.Contains("SingleMail"))
+            {
+                // Single Mail
+                listItem_singleMail.Style["border-bottom"] = "2px solid white";
+                listItem_home.Style.Clear();
+                listItem_multiMail.Style.Clear();
+            }
+            else if (Request.Url.AbsoluteUri.Contains("MultipleMail"))
+            {
+                // Multiple Mail
+                listItem_multiMail.Style["border-bottom"] = "2px solid white";
+                listItem_home.Style.Clear();
+                listItem_singleMail.Style.Clear();
+            }
+            else
+            {
+                //Home
+                //listItem_home.Style["border-bottom"] = "2px solid white";
+                //listItem_singleMail.Style.Clear();
+                //listItem_multiMail.Style.Clear();
+            }
+
+        }
+
+        protected void lnkbtn_Logout_Click(object sender, EventArgs e)
+        {
+            Session.Clear();
         }
     }
 }

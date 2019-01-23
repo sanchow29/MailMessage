@@ -87,7 +87,7 @@
                         <li runat="server" id="listItem_home"><a runat="server" href="~/Default">Dashboard</a></li>
                         <li runat="server" id="listItem_singleMail"><a runat="server" href="~/SingleMail">Single Mail</a></li>
                         <li runat="server" id="listItem_multiMail"><a runat="server" href="~/MultipleMail">Multiple Mail</a></li>
-                        <li runat="server" id="listItem_admin">
+                        <li runat="server" id="listItem_admin" style="display:block">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="CreateUser">Create User</a></li>
@@ -96,9 +96,12 @@
                             </ul>
                         </li>
                          <li runat="server" id="li1"><a runat="server" href="~/Reports">Reports</a></li>
-                        <li><a href="Login.aspx">Logout</a></li>
-                    </ul>
+                       <%-- <li ><a href="Login.aspx">Logout</a></li>--%>
 
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+            <li><a href="Login.aspx">Logout</a></li>
+        </ul>
                 </div>
 
             </div>

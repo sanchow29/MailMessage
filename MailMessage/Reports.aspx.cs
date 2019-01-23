@@ -63,12 +63,12 @@ namespace MailMessage
         }
         protected void DeleteFile(object sender, EventArgs e)
         {
-            if (base.Session["Role"].ToString() == "User")
-            {
+            string role = base.Session["Role"].ToString();
+            if (role == "User" || role == "Admin")
+            {             
                
-                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "AlertLogin", "alert('You don't have rights to see this page!!')", true);
-                    Response.Redirect("~/SiteAcess.aspx");
-               
+                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "AlertLogin", "alert('You don't have rights to delete the page!!')", true);
+                    Response.Redirect("~/SiteAcess.aspx");               
             }
             else
             {

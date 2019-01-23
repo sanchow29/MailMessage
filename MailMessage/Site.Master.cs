@@ -21,6 +21,11 @@ namespace MailMessage
 
         public void styleMenuPages()
         {
+            string role = base.Session["Role"].ToString();
+            if (role == "User")
+            {
+                listItem_admin.Style["display"] = "None";
+            }
 
             if (Request.Url.AbsoluteUri.Contains("SingleMail"))
             {

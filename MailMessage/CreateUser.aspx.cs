@@ -15,12 +15,12 @@ namespace MailMessage
             }
             if (!IsPostBack)
             {
-                string role = base.Session["Role"].ToString();
-                if (role == "User")
-                {
-                    ScriptManager.RegisterClientScriptBlock(this, GetType(), "AlertLogin", "alert('You don't have rights to see this page!!')", true);
-                    Response.Redirect("~/SiteAcess.aspx");
-                }
+                //string role = base.Session["Role"].ToString();
+                //if (role == "User")
+                //{
+                //    ScriptManager.RegisterClientScriptBlock(this, GetType(), "AlertLogin", "alert('You don't have rights to see this page!!')", true);
+                //    Response.Redirect("~/SiteAcess.aspx");
+                //}
             }
             //clear all the textbox values
         }
@@ -46,7 +46,7 @@ namespace MailMessage
                 else
                 {
                     MySqlConnection MyConn2 = new MySqlConnection(" server = 50.62.209.108;port=3306; user id = sarasa; database = hans;password=@dmin@2018");
-                    MySqlCommand MyCommand2 = new MySqlCommand($"INSERT INTO `MailMessage_details` (`FName`, `LName`, `Email_ID`,`UserId`, `Password`, `Phone_Number`, `Role`, `EmailLimit`, `Status`, `CreatedBy`, `CreatedDate`) VALUES ('{fname}', '{lname}', '{emailid}','{userid}', '{pwd}', '{phoneno}', '{role}', '{emaillimit}', 'Active', '{base.Session["Email"].ToString()}', '{DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")}');", MyConn2);
+                    MySqlCommand MyCommand2 = new MySqlCommand($"INSERT INTO `MailMessage_details` (`FName`, `LName`, `Email_ID`,`UserId`, `Password`, `Phone_Number`, `Role`, `EmailLimit`, `Status`,`masteruser`, `CreatedBy`, `CreatedDate`) VALUES ('{fname}', '{lname}', '{emailid}','{userid}', '{pwd}', '{phoneno}', '{role}', '{emaillimit}', 'Active', '{base.Session["UserID"].ToString()}','{base.Session["Email"].ToString()}', '{DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss")}');", MyConn2);
                     MySqlDataReader MyReader2;
                     MyConn2.Open();
                     MyReader2 = MyCommand2.ExecuteReader();

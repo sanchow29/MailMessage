@@ -102,7 +102,6 @@ namespace MailMessage
 
                 try
                 {
-
                     var Query = "select * from hans.MailMessage_details where UserID='" + userName + "' and Password='" + password + "';";
                     MySqlConnection MyConn2 = new MySqlConnection(MyConnection2);
                     MySqlCommand MyCommand2 = new MySqlCommand(Query, MyConn2);

@@ -214,6 +214,7 @@
             <%--<asp:AsyncPostBackTrigger ControlID="radioButton_SinglePage" EventName="CheckedChanged" />
                     <asp:AsyncPostBackTrigger ControlID="radioButton_Multipage" EventName="CheckedChanged" />--%>
             <asp:PostBackTrigger ControlID="btn_upload" />
+            <asp:PostBackTrigger ControlID="btnsendmultipleemail" />
 
         </Triggers>
 

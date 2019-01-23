@@ -33,42 +33,91 @@ namespace MailMessage
             string subject = txtmulsub.Text.ToString();
             int limit = Mailcount(base.Session["UserID"].ToString());
             int count = Convert.ToInt32(base.Session["EmailLimit"].ToString());
+
+            System.Net.Mail.MailMessage mess = null;
+
             if (limit <= count)
             {
                 if (!string.IsNullOrEmpty(message) && !string.IsNullOrEmpty(subject))
                 {
                     try
                     {
-                        var mess = new System.Net.Mail.MailMessage() ;
-                       
-                        foreach (GridViewRow g in grdview_MultiEmail.Rows)
+
+                        //var mess = new System.Net.Mail.MailMessage();
+
+                        using (mess = new System.Net.Mail.MailMessage())
                         {
-                            if (g.RowType == DataControlRowType.DataRow)
+
+                            mess.From = new MailAddress(base.Session["Email"].ToString());
+
+                            foreach (GridViewRow gr in grdview_MultiEmail.Rows)
                             {
-                                using (mess = new System.Net.Mail.MailMessage(base.Session["Email"].ToString(),g.Cells[0].Text.ToString())
+                                if (gr.RowType == DataControlRowType.DataRow)
                                 {
-                                    Subject = subject,
-                                    Body = message
-                                })
-                                { 
-                                    if (fileuploadAttachments_Multiple.HasFile)
+                                    if (!String.IsNullOrEmpty(gr.Cells[0].Text) && gr.Cells[0].Text != "&nbsp;")
                                     {
-                                        string FileName = Path.GetFileName(fileuploadAttachments_Multiple.PostedFile.FileName);
-                                        mess.Attachments.Add(new Attachment(fileuploadAttachments_Multiple.PostedFile.InputStream, FileName));
+                                        mess.Bcc.Add(new MailAddress(gr.Cells[0].Text));
                                     }
-                                    mess.IsBodyHtml = true;
-                                    new SmtpClient
-                                    {
-                                        Host = "relay-hosting.secureserver.net",
-                                        Port = 25,
-                                        EnableSsl = false,
-                                        DeliveryMethod = SmtpDeliveryMethod.Network,
-                                        UseDefaultCredentials = false,
-                                        Credentials = new NetworkCredential("info@hanusol.com", "hanusol@2018")
-                                    }.Send(mess);
                                 }
                             }
+
+                            mess.Subject = subject;
+                            mess.Body = message;
+
+                            //}
+                            //{
+                            if (fileuploadAttachments_Multiple.HasFile)
+                            {
+
+                                string FileName = Path.GetFileName(fileuploadAttachments_Multiple.PostedFile.FileName);
+                                mess.Attachments.Add(new Attachment(fileuploadAttachments_Multiple.PostedFile.InputStream, FileName));
+                            }
+                            mess.IsBodyHtml = true;
+                            new SmtpClient
+                            {
+                                Host = "relay-hosting.secureserver.net",
+                                Port = 25,
+                                EnableSsl = false,
+                                DeliveryMethod = SmtpDeliveryMethod.Network,
+                                UseDefaultCredentials = false,
+                                Credentials = new NetworkCredential("info@hanusol.com", "hanusol@2018")
+                            }.Send(mess);
+
+
                         }
+
+                        #region Original Code
+                        //foreach (GridViewRow g in grdview_MultiEmail.Rows)
+                        //{
+                        //    if (g.RowType == DataControlRowType.DataRow)
+                        //    {
+
+                        //        using (mess = new System.Net.Mail.MailMessage(base.Session["Email"].ToString(),g.Cells[0].Text.ToString())
+                        //        {
+                        //            Subject = subject,
+                        //            Body = message
+                        //        })
+                        //        { 
+                        //            if (fileuploadAttachments_Multiple.HasFile)
+                        //            {
+                        //                string FileName = Path.GetFileName(fileuploadAttachments_Multiple.PostedFile.FileName);
+                        //                mess.Attachments.Add(new Attachment(fileuploadAttachments_Multiple.PostedFile.InputStream, FileName));
+                        //            }
+                        //            mess.IsBodyHtml = true;
+                        //            new SmtpClient
+                        //            {
+                        //                Host = "relay-hosting.secureserver.net",
+                        //                Port = 25,
+                        //                EnableSsl = false,
+                        //                DeliveryMethod = SmtpDeliveryMethod.Network,
+                        //                UseDefaultCredentials = false,
+                        //                Credentials = new NetworkCredential("info@hanusol.com", "hanusol@2018")
+                        //            }.Send(mess);
+                        //        }
+                        //    }
+                        //}
+                        #endregion
+
                         grdview_MultiEmail.DataSource = null;
                         grdview_MultiEmail.DataBind();
                         txtmultiplemessg.Text = null;
@@ -115,7 +164,7 @@ namespace MailMessage
 
         public void Readexceel(string path)
         {
-           
+
             string conn = string.Empty;
             string filePath = path;
             DataTable dtExcel = new DataTable();
@@ -131,7 +180,7 @@ namespace MailMessage
                 loadGridView(dtExcel);
             }
             Session["Rowount"] = dtExcel.Rows.Count;
-            
+
             #region
             // Session["MailType"] = "Multiple";
             // working in local
@@ -179,14 +228,14 @@ namespace MailMessage
             //}
             //return "";
             #endregion
-            
+
         }
 
         public int Mailcount(string name)
         {
             int emailcount = 0;
             try
-            {                
+            {
                 MySqlConnection MyConn2 = new MySqlConnection(MyConnection2);
                 MySqlCommand MyCommand2 = new MySqlCommand("SELECT sum(count) AS EmailCount FROM dashboard_details WHERE type in('single','multiple') and name='" + name + "' ;", MyConn2);
                 MyConn2.Open();
@@ -236,18 +285,18 @@ namespace MailMessage
 
         protected void btn_upload_Click(object sender, EventArgs e)
         {
-           
-            string name = base.Session["UserID"].ToString()  ;
+
+            string name = base.Session["UserID"].ToString();
             try
             {
                 if (Multipleemailupd.HasFile)
                 {
-                    string filename = Server.MapPath("/testfolder/Uploads/") + name + "_" + Multipleemailupd.FileName ;
+                    string filename = Server.MapPath("/testfolder/Uploads/") + name + "_" + Multipleemailupd.FileName;
                     Multipleemailupd.SaveAs(filename);
                     Readexceel(filename);
                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "Saved", "alert(' File uploaded successfully ')", true);
                     return;
-                }                
+                }
             }
 
             catch (Exception ex)
@@ -308,7 +357,7 @@ namespace MailMessage
 
         protected void btn_bulkSampleExcel_Click(object sender, EventArgs e)
         {
-            Response.Redirect("~/testfolder/SampleFile.xlsx");
+            Response.Redirect("~/testfolder/Uploads/SampleFile.xlsx");
         }
 
 

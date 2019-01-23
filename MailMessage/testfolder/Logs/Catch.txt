@@ -1179,3 +1179,131 @@ System.Net.Sockets.SocketException
 Message : A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond 72.167.234.197:25
 StackTrace :    at System.Net.Sockets.Socket.DoConnect(EndPoint endPointSnapshot, SocketAddress socketAddress)
    at System.Net.ServicePoint.ConnectSocketInternal(Boolean connectFailure, Socket s4, Socket s6, Socket& socket, IPAddress& address, ConnectSocketState state, IAsyncResult asyncResult, Exception& exception)
+-----------------------------------------------------------------------------
+Date : 21-Jan-19 7:50:36 PM
+
+System.Threading.ThreadAbortException
+Message : Thread was being aborted.
+StackTrace :    at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.End()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at System.Web.HttpResponse.Redirect(String url)
+   at MailMessage.Login.LoginButton_Click(Object sender, EventArgs e) in C:\Users\sanch\Desktop\MailMessage\MailMessage\MailMessage\Login.aspx.cs:line 128
+-----------------------------------------------------------------------------
+Date : 21-Jan-19 7:53:30 PM
+
+System.Threading.ThreadAbortException
+Message : Thread was being aborted.
+StackTrace :    at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.End()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at System.Web.HttpResponse.Redirect(String url)
+   at MailMessage.Login.LoginButton_Click(Object sender, EventArgs e) in C:\Users\sanch\Desktop\MailMessage\MailMessage\MailMessage\Login.aspx.cs:line 128
+-----------------------------------------------------------------------------
+Date : 21-Jan-19 7:53:34 PM
+
+System.FormatException
+Message : Input string was not in a correct format.
+StackTrace :    at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at System.Convert.ToInt32(String value)
+   at MailMessage._Default.Mailcount(String name) in C:\Users\sanch\Desktop\MailMessage\MailMessage\MailMessage\Default.aspx.cs:line 115
+-----------------------------------------------------------------------------
+Date : 21-Jan-19 7:54:40 PM
+
+System.Threading.ThreadAbortException
+Message : Thread was being aborted.
+StackTrace :    at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.End()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at System.Web.HttpResponse.Redirect(String url)
+   at MailMessage.Login.LoginButton_Click(Object sender, EventArgs e) in C:\Users\sanch\Desktop\MailMessage\MailMessage\MailMessage\Login.aspx.cs:line 128
+-----------------------------------------------------------------------------
+Date : 21-Jan-19 7:54:45 PM
+
+System.FormatException
+Message : Input string was not in a correct format.
+StackTrace :    at System.Number.StringToNumber(String str, NumberStyles options, NumberBuffer& number, NumberFormatInfo info, Boolean parseDecimal)
+   at System.Number.ParseInt32(String s, NumberStyles style, NumberFormatInfo info)
+   at System.Convert.ToInt32(String value)
+   at MailMessage._Default.Mailcount(String name) in C:\Users\sanch\Desktop\MailMessage\MailMessage\MailMessage\Default.aspx.cs:line 115
+-----------------------------------------------------------------------------
+Date : 21-Jan-19 8:14:42 PM
+
+System.Threading.ThreadAbortException
+Message : Thread was being aborted.
+StackTrace :    at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.End()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at System.Web.HttpResponse.Redirect(String url)
+   at MailMessage.Login.LoginButton_Click(Object sender, EventArgs e) in C:\Users\sanch\Desktop\MailMessage\MailMessage\MailMessage\Login.aspx.cs:line 128
+-----------------------------------------------------------------------------
+Date : 22-Jan-19 6:49:57 PM
+
+System.Threading.ThreadAbortException
+Message : Thread was being aborted.
+StackTrace :    at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.End()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at System.Web.HttpResponse.Redirect(String url)
+   at MailMessage.Login.LoginButton_Click(Object sender, EventArgs e) in C:\Users\sanch\Desktop\MailMessage\MailMessage\MailMessage\Login.aspx.cs:line 128
+-----------------------------------------------------------------------------
+Date : 22-Jan-19 6:51:10 PM
+
+MySql.Data.MySqlClient.MySqlException
+Message : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''masteruser', `CreatedBy`, `CreatedDate`) VALUES ('testt', 'redf', 'fdsda@dtdgcg' at line 1
+StackTrace :    at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int32& insertedId)
+   at MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int32& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader()
+   at MailMessage.Admin.btncreateuser_Click(Object sender, EventArgs e) in C:\Users\sanch\Desktop\MailMessage\MailMessage\MailMessage\CreateUser.aspx.cs:line 52
+-----------------------------------------------------------------------------
+Date : 22-Jan-19 6:54:00 PM
+
+System.Threading.ThreadAbortException
+Message : Thread was being aborted.
+StackTrace :    at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.End()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at System.Web.HttpResponse.Redirect(String url)
+   at MailMessage.Login.LoginButton_Click(Object sender, EventArgs e) in C:\Users\sanch\Desktop\MailMessage\MailMessage\MailMessage\Login.aspx.cs:line 128
+-----------------------------------------------------------------------------
+Date : 22-Jan-19 6:55:22 PM
+
+MySql.Data.MySqlClient.MySqlException
+Message : You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''masteruser', `CreatedBy`, `CreatedDate`) VALUES ('test', 'test', 'test@test.com' at line 1
+StackTrace :    at MySql.Data.MySqlClient.MySqlStream.ReadPacket()
+   at MySql.Data.MySqlClient.NativeDriver.GetResult(Int32& affectedRow, Int32& insertedId)
+   at MySql.Data.MySqlClient.Driver.GetResult(Int32 statementId, Int32& affectedRows, Int32& insertedId)
+   at MySql.Data.MySqlClient.Driver.NextResult(Int32 statementId)
+   at MySql.Data.MySqlClient.MySqlDataReader.NextResult()
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader(CommandBehavior behavior)
+   at MySql.Data.MySqlClient.MySqlCommand.ExecuteReader()
+   at MailMessage.Admin.btncreateuser_Click(Object sender, EventArgs e) in C:\Users\sanch\Desktop\MailMessage\MailMessage\MailMessage\CreateUser.aspx.cs:line 52
+-----------------------------------------------------------------------------
+Date : 22-Jan-19 6:59:15 PM
+
+System.Threading.ThreadAbortException
+Message : Thread was being aborted.
+StackTrace :    at System.Threading.Thread.AbortInternal()
+   at System.Threading.Thread.Abort(Object stateInfo)
+   at System.Web.HttpResponse.AbortCurrentThread()
+   at System.Web.HttpResponse.End()
+   at System.Web.HttpResponse.Redirect(String url, Boolean endResponse, Boolean permanent)
+   at System.Web.HttpResponse.Redirect(String url)
+   at MailMessage.Login.LoginButton_Click(Object sender, EventArgs e) in C:\Users\sanch\Desktop\MailMessage\MailMessage\MailMessage\Login.aspx.cs:line 128
