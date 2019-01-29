@@ -56,7 +56,7 @@ namespace MailMessage
                                 string FileName = Path.GetFileName(fileUpload.PostedFile.FileName);
                                 mess.Attachments.Add(new Attachment(fileUpload.PostedFile.InputStream, FileName));
                             }                               
-                           
+                          
                             mess.IsBodyHtml = true;
                             new SmtpClient
                             {
