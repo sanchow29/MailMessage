@@ -63,7 +63,8 @@ namespace MailMessage
 
                             mess.Subject = subject;
                             mess.Body = message;
-
+                            //have to check the db logic to insert i to database
+                            //have to upload the emails into db using bulk copy
                             //}
                             //{
                             if (fileuploadAttachments_Multiple.HasFile)
@@ -83,9 +84,11 @@ namespace MailMessage
                                 Credentials = new NetworkCredential("info@hanusol.com", "hanusol@2018")
                             }.Send(mess);
 
+                            //have to check the body is html or not before sending the email to the user
 
                         }
 
+                        //have to check the email before we send to the customer with the email and subject
                         #region Original Code
                         //foreach (GridViewRow g in grdview_MultiEmail.Rows)
                         //{
@@ -134,6 +137,7 @@ namespace MailMessage
                     }
                     catch (Exception ex)
                     {
+                        //log the exception if any thi g occurs
                         string filePath = Server.MapPath("~/testfolder/Logs/") + "\\" + "Catch.txt";
                         using (StreamWriter writer = new StreamWriter(filePath, true))
                         {
@@ -164,7 +168,7 @@ namespace MailMessage
 
         public void Readexceel(string path)
         {
-
+            //read the exceel before upload the file to db 
             string conn = string.Empty;
             string filePath = path;
             DataTable dtExcel = new DataTable();
@@ -180,7 +184,12 @@ namespace MailMessage
                 loadGridView(dtExcel);
             }
             Session["Rowount"] = dtExcel.Rows.Count;
-
+            MySqlConnection sqlcon = new MySqlConnection(MyConnection2);
+            sqlcon.Open();
+            MySqlBulkLoader sq = new MySqlBulkLoader( sqlcon);
+            sq.TableName = "testtable";// to create testtable into hans database
+            sq.Load();
+            sqlcon.Close();
             #region
             // Session["MailType"] = "Multiple";
             // working in local
